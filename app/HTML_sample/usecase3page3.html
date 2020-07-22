@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang=ja>
+
+  <head>
+    <meta charset="utf-8">
+    <title>避難所の状態を確認</title>
+  </head>
+
+  <style>
+   .head1{background-color: #32CD32;
+         }
+   .select{text-align:center; font-size: 1.5em;
+         }
+   .info{font-size: 1.5em;
+      }
+   .map{ -webkit-appearance: none; float:right;
+      }
+  </style>
+
+  <body>
+      <div class="head1">
+       <h1>Root 中田　アプリ名
+         <input type="button" value="メニュー" style=" -webkit-appearance: none; font-size: 0.8em; width:120px;height:71px; background-color:#ADFF2F; float:right;" onclick="document.location='menu.html';">
+       </h1>
+       <hr>
+      </div>
+
+     <h2>避難所の状態を確認
+       <input type="button" name="" value="メニューに戻る" style=" -webkit-appearance: none; float: right; height: 30px; width: 95px;" onclick="document.location='menu.html';">
+     </h2>
+
+     <div class="info">
+       <fieldset>
+         <div class="map">
+           <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d13098.021627877364!2d134.686752!3d34.843526!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xa4cb450248bf7b92!2z5aer6Lev5biC56uL5Z-O5Lm-5bCP5a2m5qCh!5e0!3m2!1sja!2sjp!4v1595441067061!5m2!1sja!2sjp" width="600" height="360" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+         </div>
+
+         <dl>
+           <dt>城乾小学校</dt>
+           <dd>・住所： <br>
+               ・電話番号： <br>
+               ・広さ： 　㎡<br>
+               ・収容可能人数（世帯）：  人<br>
+               ・対応災害区分： <br>
+           </dd>
+           <dt>現在の状態（最終更新日時：　）</dt>
+           <dd>・開設状況： <br>
+               ・収容人数：　人（　%） <br>
+           </dd>
+         </dl>
+         <hr>
+
+         <p>近隣に他の避難所があります</p>
+         <a href="">・城乾中学校</a>
+         <a href="">・姫路市民会館</a>
+
+       </fieldset>
+     </div>
+  </body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang=ja>
+
+  <head>
+    <meta charset="utf-8">
+    <title>避難所の状態を確認</title>
+  </head>
+
+  <style>
+   .head1{background-color: #32CD32;
+         }
+   .select{text-align:center; font-size: 1.5em;
+         }
+   .h6{float:center;
+      }
+  </style>
+
+  <body>
+      <div class="head1">
+       <h1>Root 中田　アプリ名
+         <input type="button" value="メニュー" style=" float: center; -webkit-appearance: none; font-size: 0.8em; width:120px;height:71px; background-color:#ADFF2F; float:right;" onclick="document.location='menu.html';">
+       </h1>
+       <hr>
+      </div>
+
+     <h2>避難所の状態を確認</h2>
+
+    <div class="select">
+　　　 <p>避難所を選択してください</p>
+
+      <fieldset>
+        <label>・現在地から選択する</label><br>
+        <input type="button" name="" value="現在地情報を取得" style=" -webkit-appearance: none; height:30px; background-color:#ADFF2F; " onclick="document.location='usecase3page2-2.html';"><br>
+
+        <dl>
+          <dt>・エリアから選択する</dt>
+          <dd><label>都道府県：
+                <select class="" name="" style=" width: 100px">
+                  <option>選択</option>
+                  <option>兵庫県</option>
+                  <option>etc.</option>
+                </select><br>
+                  市町村：
+                  <select class="" name="" style="width: 100px">
+                    <option>選択</option>
+                    <option>姫路市</option>
+                  </select><br>
+                  地域：
+                  <select class="" name="" style="width: 100px">
+                    <option>選択</option>
+                    <option>姫路城周辺</option>
+                  </select><br>
+                  避難所：
+                  <select class="" name="" style="width: 100px">
+                    <option>選択</option>
+                    <option>城乾小学校</option>
+                  </select><br>
+            </label></dd>
+        </dl>
+
+        <label>・地図から選択する</label>
+        <div class="map">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d13098.021627877364!2d134.686752!3d34.843526!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xa4cb450248bf7b92!2z5aer6Lev5biC56uL5Z-O5Lm-5bCP5a2m5qCh!5e0!3m2!1sja!2sjp!4v1595441067061!5m2!1sja!2sjp" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+        </div>
+
+      </fieldset>
+
+      <input type="button" name="" value="確認する" onclick="document.location='usecase3page3.html';">
+    </div>
+
+  </body>
+
+</html>

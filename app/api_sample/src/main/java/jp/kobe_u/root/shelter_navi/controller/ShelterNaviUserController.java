@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.slf4j.Slf4j;
-
+import jp.kobe_u.root.shelter_navi.controller.response.ShelterNaviResponse;
+import jp.kobe_u.root.shelter_navi.entity.Shelter;
 import jp.kobe_u.root.shelter_navi.service.ShelterNaviService;
 
 @RestController
@@ -25,4 +26,24 @@ public class ShelterNaviUserController {
     @Autowired
     private ShelterNaviService shelterNaviService;
     
+    @GetMapping( "/{shelter_id}" )
+    public ShelterNaviResponse getShelter( @PathVariable( "shelter_id" ) String shelter_id ) {
+        log.info( "Getting shelter " + shelter_id + "..." );
+
+        Shelter shelter = shelterNaviService.getShelter( shelter_id );
+
+        return ShelterNaviResponse.createSuccessResponse( shelter );
+    }
+
+    /*
+    @PostMapping( "/{shelter_id}/check_in" )
+    public ShelterNaviResponse checkInShelter( ) {
+
+    }
+
+    @PostMapping( "/{shelter_id}/check_out" )
+    public ShelterNaviResponse checkOutShelter( ) {
+
+    }
+    */
 }

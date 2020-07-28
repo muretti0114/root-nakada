@@ -1,7 +1,4 @@
-package jp.kobe_u.root.shelter_navi.entity;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
+package jp.kobe_u.root.shelter_navi.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,15 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-/**
- * idはシステム側が決定する
- * localGovernmentCodeもシステム側で調べる？
- * デモ版では入力してもらう？
- */
-public class Shelter {
-    @Id
-    private long id;
+public class ShelterDto {
     private String name;
     private String address;
     private Double lng;

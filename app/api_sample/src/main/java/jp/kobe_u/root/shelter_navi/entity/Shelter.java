@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
  */
 public class Shelter {
     @Id
-    private long id;
+    private Long id;
     private String name;
     private String address;
     private Double lng;

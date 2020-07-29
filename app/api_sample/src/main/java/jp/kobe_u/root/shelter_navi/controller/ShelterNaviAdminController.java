@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+//import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +28,7 @@ public class ShelterNaviAdminController {
     @Autowired
     private ShelterNaviService shelterNaviService;
 
+    /*
     @PostMapping( "/create" )
     public ShelterNaviResponse createShelter( @RequestBody ShelterDto shelter_dto ) {
         // 管理者に入力してもらった避難所情報(id以外？)をdtoで受け取る
@@ -37,16 +38,10 @@ public class ShelterNaviAdminController {
 
         return ShelterNaviResponse.createSuccessResponse( shelter );
     }
-
-    @GetMapping( "" )
-    public ShelterNaviResponse getAllShelters() {
-        log.info( "Getting all shelters..." );
-
-        return ShelterNaviResponse.createSuccessResponse( shelterNaviService.getAllShelters() );
-    }
-
+    */
+    
     @PostMapping( "/{shelter_id}/delete" )
-    public ShelterNaviResponse deleteShelter( @PathVariable( "shelter_id" ) String shelter_id ) {
+    public ShelterNaviResponse deleteShelter( @PathVariable( "shelter_id" ) Long shelter_id ) {
         log.info( "Deleting shelter " + shelter_id + "..." );
 
         shelterNaviService.deleteShelter( shelter_id );
@@ -61,5 +56,12 @@ public class ShelterNaviAdminController {
         shelterNaviService.clearAllShelters();
 
         return ShelterNaviResponse.createSuccessResponse( null, "All shelters cleared" );
+    }
+
+    @GetMapping( "" )
+    public ShelterNaviResponse getAllShelters() {
+        log.info( "Getting all shelters..." );
+
+        return ShelterNaviResponse.createSuccessResponse( shelterNaviService.getAllShelters() );
     }
 }

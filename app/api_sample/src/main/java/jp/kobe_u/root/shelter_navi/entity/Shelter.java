@@ -24,8 +24,8 @@ public class Shelter {
     private Double lng;
     private Double lat;
     private Integer area;
-    private Integer maxFamilies;
-    private String contactPhone;
+    private Integer max_families;
+    private String contact_phone;
     private String note;
-    private Long localGovernmentCode;
+    private Long local_government_code;
 }

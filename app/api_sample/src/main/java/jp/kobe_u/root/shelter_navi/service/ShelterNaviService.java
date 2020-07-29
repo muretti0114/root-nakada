@@ -46,6 +46,8 @@ public class ShelterNaviService {
 
         all_shelters.forEach( shelter_list::add );
 
+        if ( shelter_list.isEmpty() ) throw new ShelterNotFoundException( ShelterNotFoundException.ACCOUNT_NOT_FOUND, "Shelters are not found." );
+        
         return shelter_list;
     }
 

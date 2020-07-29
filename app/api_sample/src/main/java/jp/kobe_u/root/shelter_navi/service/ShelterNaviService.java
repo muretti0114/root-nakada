@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import jp.kobe_u.root.shelter_navi.dto.ShelterDto;
 import jp.kobe_u.root.shelter_navi.entity.Shelter;
+import jp.kobe_u.root.shelter_navi.exception.ShelterNotFoundException;
 import jp.kobe_u.root.shelter_navi.repository.ShelterRepository;
 
 @Service
@@ -48,7 +49,7 @@ public class ShelterNaviService {
 
     public Shelter getShelter( Long id ) {
         Shelter shelter = shelters.findById( id ).orElseThrow(
-            () -> new ShelterNotFoundException(); 
+            () -> new ShelterNotFoundException( ShelterNotFoundException.ACCOUNT_NOT_FOUND, "Shelter : " + id + " is not found" ) 
         );
 
         return shelter;
@@ -56,7 +57,7 @@ public class ShelterNaviService {
 
     public void deleteShelter( Long id ) {
         Shelter shelter = shelters.findById( id ).orElseThrow(
-            () -> new ShelterNotFoundException();
+            () -> new ShelterNotFoundException( ShelterNotFoundException.ACCOUNT_NOT_FOUND, "Shelter : " + id + " is not found" )
         );
 
         shelters.deleteById( shelter.getId() );

@@ -22,6 +22,8 @@ public class ShelterNaviService {
     public Shelter createShelter( ShelterDto shelter_dto ) {
         // 避難所のidをシステム側で生成する場合，何を基準に登録済みか判定するのか？
         // 避難所の名前？
+        // 住所で見るのが確実？
+        // 表記揺れとかどうしよう
         String shelter_name = shelter_dto.getName();
 
         // 同名の避難所がないかチェック？

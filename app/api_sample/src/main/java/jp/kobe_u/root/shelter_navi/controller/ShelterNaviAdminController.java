@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.slf4j.Slf4j;
 import jp.kobe_u.root.shelter_navi.controller.response.ShelterNaviResponse;
-import jp.kobe_u.root.shelter_navi.dto.ShelterDto;
+import jp.kobe_u.root.shelter_navi.dto.ShelterForm;
 import jp.kobe_u.root.shelter_navi.entity.Shelter;
 import jp.kobe_u.root.shelter_navi.service.ShelterNaviService;
 
@@ -28,17 +28,15 @@ public class ShelterNaviAdminController {
     @Autowired
     private ShelterNaviService shelterNaviService;
 
-    /*
     @PostMapping( "/create" )
-    public ShelterNaviResponse createShelter( @RequestBody ShelterDto shelter_dto ) {
+    public ShelterNaviResponse createShelter( @RequestBody ShelterForm form ) {
         // 管理者に入力してもらった避難所情報(id以外？)をdtoで受け取る
         
         // dtoが持つパラメータを基にService層にShelterインスタンスの生成を依頼する
-        Shelter shelter = shelterNaviService.createShelter( shelter_dto );
+        Shelter shelter = shelterNaviService.createShelter( form );
 
         return ShelterNaviResponse.createSuccessResponse( shelter );
     }
-    */
     
     @PostMapping( "/{shelter_id}/delete" )
     public ShelterNaviResponse deleteShelter( @PathVariable( "shelter_id" ) Long shelter_id ) {

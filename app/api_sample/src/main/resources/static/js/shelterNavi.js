@@ -7,6 +7,32 @@ function getServerAddr() {
     return path;
 }
 
+function createShleter() {
+    let endpoint = serverAddr + "/admin/shelters/create/";
+
+    $.ajax({
+        type: "POST",
+        url: endpoint,
+        dataType: "JSON",
+        data: {
+            id: $( '#create_id' ).val(),
+            name: $( '#create_name' ).val(),
+            address: $( '#crate_address' ).val(),
+            lng: $( '#create_lng' ).val(),
+            lat: $( '#create_lat' ).val(),
+            area: $( '#create_area' ).val(),
+            maxFamilies: $( '#create_max_families' ).val(),
+            contactPhone: $( '#create_contact_phone' ).val(),
+            note: $( '#create_note' ).val(),
+            localGovernmentCode: $( '#create_local_government_code' ).val()
+        }
+    }).done( function ( data, dataType ) {
+
+    }).fail( function ( xhr ) {
+        
+    })
+}
+
 function getAllShelters() {
     let endpoint = serverAddr + "/admin/shelters/";
 

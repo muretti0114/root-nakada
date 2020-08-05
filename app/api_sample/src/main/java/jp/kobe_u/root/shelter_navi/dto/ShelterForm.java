@@ -7,7 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ShelterDto {
+public class ShelterForm {
+    private String id;
     private String name;
     private String address;
     private Double lng;

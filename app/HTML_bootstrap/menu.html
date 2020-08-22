@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+  <head>
+    <meta charset="utf-8">
+    <title>メニュー</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="css/bootstrap.css">
+   <script type="text/javascript" src="js/jquery-3.5.1.js"></script>
+   <script type="text/javascript" src="js/bootstrap.js"></script>
+  </head>
+
+  <style>
+   h4{text-align:center; font-size: 1.5em;
+   }
+   h2{font-size: 1.8em;
+   }
+   .{background-color: #32CD32;
+   }
+  </style>
+
+  <body>
+    <header>
+      <nav class="navbar navbar-inverse" style="background-color: #32CD32;">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="menu.html" style="Color: white;" >シェルターなび</a>
+          </div>
+          <ul class="nav">
+            <li class="active"><a href="menu.html"  style="Color: white;">メニュー</a></li>
+            <li><a href="#"  style="Color: white;"> / </a></li>
+            <li><a href="usecase3page2.html"  style="Color: white;"　>避難所の状態を確認</a></li>
+            <li><a href="#"  style="Color: white;"> / </a></li>
+            <li><a href="usecase4page2.html"  style="Color: white;">チェックイン</a></li>
+            <li><a href="#"  style="Color: white;"> / </a></li>
+            <li><a href="usecase5page2.html"  style="Color: white;">チェックアウト</a></li>
+          </ul>
+          <ul class="nav navbar-right">
+            <li><a href="usecase2page2.html"  style="Color: "><span class="glyphicon glyphicon-user"></span> ユーザー登録</a></li>
+            <li><a href="#"  style="Color: ;"><span class="glyphicon glyphicon-user"></span> / </a></li>
+            <li><a href="#"  style="Color:;"><span class="glyphicon glyphicon-log-in"></span> ログイン</a></li>
+          </ul>
+        </div>
+      </nav>
+
+      <h1>メニュー</h1>
+
+      <h4>いずれかの項目を選択してください<h4>
+
+      <div class="btn-group-vertical">
+        <button type="button"
+               class="btn btn-primary"
+               onclick="document.location='usecase1page2.html';">避難所を登録</button>
+        <button type="button"
+               class="btn btn-primary"
+               onclick="document.location='usecase3page2.html';">避難所の状態を確認</button>
+        <button type="button"
+               class="btn btn-primary"
+               onclick="document.location='usecase4page2.html';">避難所にチェックイン</button>
+        <button type="button"
+               class="btn btn-primary"
+               onclick="document.location='usecase5page2.html';">避難所からチェックアウト</button>
+        <button type="button"
+               class="btn btn-primary"
+               onclick="document.location='usecase2page2.html';">ユーザー登録</button>
+      </div>
+
+
+    </header>
+
+  </body>
+</html>

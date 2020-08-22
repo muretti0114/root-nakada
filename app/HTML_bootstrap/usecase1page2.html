@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang=ja>
+
+  <head>
+    <meta charset="utf-8">
+    <title>避難所を登録</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="css/bootstrap.css">
+   <script type="text/javascript" src="js/jquery-3.5.1.js"></script>
+   <script type="text/javascript" src="js/bootstrap.js"></script>
+  </head>
+
+  <style>
+   .head1{background-color: #32CD32;
+         }
+   .form{text-align:center; font-size: 1.5em;
+   }
+  </style>
+
+  <body>
+
+    <header>
+
+      <nav class="navbar navbar-inverse" style="background-color: #32CD32;">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="menu.html" style="Color: white;" >シェルターなび</a>
+          </div>
+          <ul class="nav">
+            <li class="active"><a href="menu.html"  style="Color: white;">メニュー</a></li>
+            <li><a href="#"  style="Color: white;"> / </a></li>
+            <li><a href="usecase3page2.html"  style="Color: white;"　>避難所の状態を確認</a></li>
+            <li><a href="#"  style="Color: white;"> / </a></li>
+            <li><a href="usecase4page2.html"  style="Color: white;">チェックイン</a></li>
+            <li><a href="#"  style="Color: white;"> / </a></li>
+            <li><a href="usecase5page2.html"  style="Color: white;">チェックアウト</a></li>
+          </ul>
+          <ul class="nav navbar-right">
+            <li><a href="usecase2page2.html"  style="Color: "><span class="glyphicon glyphicon-user"></span> ユーザー登録</a></li>
+            <li><a href="#"  style="Color: ;"><span class="glyphicon glyphicon-user"></span> / </a></li>
+            <li><a href="#"  style="Color:;"><span class="glyphicon glyphicon-log-in"></span> ログイン</a></li>
+          </ul>
+        </div>
+      </nav>
+
+     <h1>避難所の登録</h1>
+
+    <div class="form">
+     <form class="" action="" method="get">
+       <p>登録したい避難所について入力してください</p>
+       <fieldset>
+         <form>
+           <div class="form-group row">
+             <label for="Inputname" class="col-sm-2 col-form-label">・名称</label>
+              <div class="col-sm-10">
+               <input type="text" class="form-control" id="Inputname" placeholder="名称">
+              </div>
+           </div>
+           <div class="form-group row">
+             <label for="Inputaddress" class="col-sm-2 col-form-label">・住所</label>
+              <div class="col-sm-10">
+               <input type="text" class="form-control" id="Inputaddress" placeholder="住所">
+              </div>
+           </div>
+           <div class="form-group row">
+             <label for="Inputphonenumber" class="col-sm-2 col-form-label">　　・電話番号</label>
+              <div class="col-sm-10">
+               <input type="text" class="form-control" id="Inputphonenumber" placeholder="電話番号">
+              </div>
+           </div>          <label>・座標　　緯度：<input name=""></label><br>
+          <label>　　　　　経度：<input name=""></label><br>
+          <label>・広さ　　　　　<input name=""></label><br>
+          <label>・収容可能人数　<input name=""></label><br>
+          <label>・対応災害区分　<input name=""></label><br>
+        </fieldset>
+
+       <input type="button" name="" value="これで登録する" onclick="document.location='usecase1page3.html';">
+     </form>
+    </div>
+
+  </body>
+
+</html>

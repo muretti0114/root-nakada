@@ -1,5 +1,7 @@
 package jp.kobe_u.root.shelter_navi.controller;
 
+import java.util.List;
+
 //import java.util.regex.Pattern;
 //import java.util.regex.Matcher;
 
@@ -7,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 //import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 //import org.springframework.web.bind.annotation.RequestParam;
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.extern.slf4j.Slf4j;
 import jp.kobe_u.root.shelter_navi.controller.response.ShelterNaviResponse;
 import jp.kobe_u.root.shelter_navi.entity.Shelter;
+import jp.kobe_u.root.shelter_navi.form.SearchForm;
 import jp.kobe_u.root.shelter_navi.service.ShelterNaviService;
 
 @RestController
@@ -33,6 +38,13 @@ public class ShelterNaviUserController {
         Shelter shelter = shelterNaviService.getShelter( shelter_id );
 
         return ShelterNaviResponse.createSuccessResponse( shelter );
+    }
+
+    @GetMapping( "/search" )
+    public ShelterNaviResponse searchSheltersByDistance( @RequestBody SearchForm form ) {
+        List<Shelter> shelters = shelterNaviService.searchSheltersByDistance( form );
+
+        return ShelterNaviResponse.createSuccessResponse( shelters );
     }
 
     /*

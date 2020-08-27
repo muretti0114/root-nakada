@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.slf4j.Slf4j;
 import jp.kobe_u.root.shelter_navi.controller.response.ShelterNaviResponse;
-import jp.kobe_u.root.shelter_navi.dto.ShelterForm;
 import jp.kobe_u.root.shelter_navi.entity.Shelter;
+import jp.kobe_u.root.shelter_navi.form.ShelterForm;
 import jp.kobe_u.root.shelter_navi.service.ShelterNaviService;
 
 @RestController

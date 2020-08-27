@@ -1,4 +1,4 @@
-package jp.kobe_u.root.shelter_navi.dto;
+package jp.kobe_u.root.shelter_navi.form;
 
 import jp.kobe_u.root.shelter_navi.entity.Shelter;
 //import javax.validation.constrains.Size;

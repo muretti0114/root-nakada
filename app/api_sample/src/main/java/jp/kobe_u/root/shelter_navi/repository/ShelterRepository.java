@@ -16,4 +16,10 @@ public interface ShelterRepository extends CrudRepository<Shelter, Long> {
         nativeQuery = true
     )
     Optional<Shelter> findShelterByName( String name );
+
+    @Query(
+        value = "SELECT *,( 6371 * acos( cos( radians( ?2 ) ) * cos( radians( lat ) ) * cos( radians( lng ) - radians( ?1 ) ) + sin( radians( ?2 ) ) * sin( radians( lat ) ) ) ) AS distance FROM shelter HAVING distance <= ?3 ORDER BY distance",
+        nativeQuery = true
+    )
+    public Iterable<Shelter> findShelterByDistance( Double userLng, Double userLat, Double distance );
 }

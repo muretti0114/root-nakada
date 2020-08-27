@@ -7,10 +7,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import jp.kobe_u.root.shelter_navi.dto.ShelterForm;
 import jp.kobe_u.root.shelter_navi.entity.Shelter;
 import jp.kobe_u.root.shelter_navi.exception.ShelterNotFoundException;
 import jp.kobe_u.root.shelter_navi.exception.ShelterValidationException;
+import jp.kobe_u.root.shelter_navi.form.SearchForm;
+import jp.kobe_u.root.shelter_navi.form.ShelterForm;
 import jp.kobe_u.root.shelter_navi.repository.ShelterRepository;
 
 @Service
@@ -54,6 +55,19 @@ public class ShelterNaviService {
 
         return shelter;
     }
+
+    public List<Shelter> searchSheltersByDistance( SearchForm form ) {
+        Iterable<Shelter> all_shelters = shelters.findShelterByDistance( form.getUserLng(), form.getUserLat(), form.getDistance() );
+
+        List<Shelter> shelter_list = new ArrayList<Shelter>();
+
+        all_shelters.forEach( shelter_list::add );
+
+        if ( shelter_list.isEmpty() ) throw new ShelterNotFoundException( ShelterNotFoundException.ACCOUNT_NOT_FOUND, "Shelters in " + form.getDistance() + "km are not found." );
+        
+        return shelter_list;
+    }
+
 
     public void deleteShelter( Long id ) {
         Shelter shelter = shelters.findById( id ).orElseThrow(

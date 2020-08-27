@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<!-- ヘッダ部分 -->
+<head>
+    <meta charset="UTF-8">
+    <title>Google Map テスト</title>
+    <!-- Google Maps APIのキー （XXXXXを自分のAPIキーに置き換える）-->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAth5QEwvqVDKNtYnyifQ1xIRioG4SBepc">
+    </script>
+    <!-- 地図の初期化 (通常は別のjsファイルに書いて srcでインポートする) -->
+    <script>
+        function initMap() {
+            // 神戸大・システム情報学研究科棟の位置
+            var pos = {lat:34.725666, lng: 135.236157};
+            // Google Map を作成．中心をシステム棟に
+            var map = new google.maps.Map(document.getElementById('gmap'), {
+                zoom: 17,
+                center: pos
+            });
+            //マーカーを置く
+            var marker = new google.maps.Marker({
+                position: pos,
+                map: map,
+                title:"神戸大学大学院システム情報学研究科"
+            });
+        }
+    </script>
+    <!-- 地図の大きさ．これが無いと表示されない（通常は別のcssファイルに書いてインポートする） -->
+    <style type="text/css">
+        #gmap {
+            width: 800px;
+            height: 600px;
+        }
+    </style>
+</head>
+
+<!-- 画面本体 -->
+<body>
+    <h1> Hello Google Map!</h1>
+    <hr>
+    <div id="gmap"></div>
+    <script>initMap();</script>
+</body>
+
+
+</html>

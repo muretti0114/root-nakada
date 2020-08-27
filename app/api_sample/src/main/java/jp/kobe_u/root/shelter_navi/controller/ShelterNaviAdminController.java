@@ -1,15 +1,17 @@
 package jp.kobe_u.root.shelter_navi.controller;
 
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
+//import java.util.regex.Pattern;
+//import java.util.regex.Matcher;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 //import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,8 +31,11 @@ public class ShelterNaviAdminController {
     private ShelterNaviService shelterNaviService;
 
     @PostMapping( "/create" )
+    //@RequestMapping(value = "/create", method = {RequestMethod.POST}, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ShelterNaviResponse createShelter( @RequestBody ShelterForm form ) {
         // 管理者に入力してもらった避難所情報(id以外？)をdtoで受け取る
+        // log.info( "creating..." );
+        // log.info( "id : " + form.getId() + " address : " + form.getAddress() +  " lng : " + form.getLng() + " name : " + form.getName() );
         
         // dtoが持つパラメータを基にService層にShelterインスタンスの生成を依頼する
         Shelter shelter = shelterNaviService.createShelter( form );

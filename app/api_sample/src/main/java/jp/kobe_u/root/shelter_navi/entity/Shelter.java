@@ -11,11 +11,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-/**
- * idはシステム側が決定する
- * localGovernmentCodeもシステム側で調べる？
- * デモ版では入力してもらう？
- */
 public class Shelter {
     @Id
     private Long id;

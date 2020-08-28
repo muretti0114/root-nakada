@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <title>メイン</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <style>
+        nav .navbar-brand,
+        nav .navbar-nav li a {
+            color: white !important;
+        }
+        /* for dropdowns only */
+        
+        nav .navbar-nav .dropdown-menu {
+            background-color: #a65e09;
+        }
+        
+        nav .navbar-nav .dropdown-menu>li>a {
+            color: #fff;
+        }
+        
+        nav .navbar-nav .dropdown-menu>li>a:hover,
+        nav .navbar-nav .dropdown-menu>li>a:focus {
+            color: #a65e09;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-sm navbar-light" style="background-color:#a65e09;">
+        <a class="navbar-brand" href="#"><img src="img/logo.png" height="32px">Shelter Navi</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">避難所検索</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">チェックイン</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">マイ避難所</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav navbar-right">
+                <li class="dropdown navbar-nav">
+                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">中田 大翔<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a class="nav-link" href="#">ユーザ情報</a></li>
+                        <li>
+                            <form>
+                                <input type="submit" class="btn btn-secondary" value="ログアウト" />
+                            </form>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <h4 class="mt-5 mb-4">最新情報</h4>
+        <div id="contents"></div>
+        <p class="mt-5 mb-3 text-muted">&copy; 2020 H. Nakada, T. Murotani, Nakamura Lab., Kobe University</p>
+    </div>
+
+</html>

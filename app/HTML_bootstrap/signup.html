@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <title>ユーザ新規登録</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+</head>
+
+
+<body>
+    <div class="container">
+        <div class="col-sm-12">
+            <div class="mb-5 text-center">
+                <img src="img/logo.png" width="50%">
+            </div>
+            <h1>ユーザ新規登録</h1>
+            <p class="mt-3 mb-4">下記の情報を入力して登録ボタンを押してください</p>
+            <form class="needs-validation" novalidate>
+                <h4 class="mt-3 mb-4"> ログイン情報</h4>
+                <div class="mb-3">
+                    <label for="email">Eメールアドレス</label>
+                    <input type="email" class="form-control" id="email" placeholder="you@example.com" required>
+                    <div class="invalid-feedback">
+                        正しいメールアドレスを入力してください
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6 mb-3">
+                        <label for="postalcode">パスワード</label>
+                        <input type="password" class="form-control" id="postalcode" placeholder="password" required>
+                        <div class="invalid-feedback">
+                            パスワードが違います
+                        </div>
+                    </div>
+                    <div class="col-sm-6 mb-3">
+                        <label for="address">パスワード (確認)</label>
+                        <input type="password" class="form-control" id="address" placeholder="password" required>
+                        <div class="invalid-feedback">
+                            パスワードが違います
+                        </div>
+                    </div>
+                </div>
+
+                <h4 class="mt-3 mb-4">個人情報</h4>
+                <div class="row">
+                    <div class="col-sm-6 mb-3">
+                        <label for="lastName">姓</label>
+                        <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
+                        <div class="invalid-feedback">
+                            姓は必須項目です．
+                        </div>
+                    </div>
+                    <div class="col-sm-6 mb-3">
+                        <label for="firstName">名</label>
+                        <input type="text" class="form-control" id="firstName" placeholder="" value="" required>
+                        <div class="invalid-feedback">
+                            名は必須項目です．
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4 mb-3">
+                        <label for="postalcode">郵便番号</label>
+                        <input type="text" class="form-control" id="postalcode" placeholder="123-4567" required>
+                        <div class="invalid-feedback">
+                            正しい郵便番号を入力してください
+                        </div>
+                    </div>
+                    <div class="col-sm-8 mb-3">
+                        <label for="address">住所</label>
+                        <input type="text" class="form-control" id="address" placeholder="神戸市〇〇区〇〇町1-2-3-456" required>
+                        <div class="invalid-feedback">
+                            正しい住所を入力してください
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4 mb-3">
+                        <label for="family">世帯人数</label>
+                        <input type="number" class="form-control" id="state" value="1" required>
+                        <div class="invalid-feedback">
+                            正しい世帯人数を入力して下さい
+                        </div>
+                    </div>
+                    <div class="col-sm-8 mb-3">
+                        <label for="phone">電話番号（緊急時連絡先）</label>
+                        <input type="text" class="form-control" id="phone" placeholder="090-999-9999" required>
+                        <div class="invalid-feedback">
+                            正しい電話番号を入力して下さい
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <input type="checkbox" id="policy">
+                    <label for="policy"><a href="#">プライバシーポリシー</a>に同意して登録する</label>
+                </div>
+                <button class="btn btn-primary btn-lg btn-block" type="submit">登録</button>
+            </form>
+            <p class="mt-5 mb-3 text-muted">&copy; 2020 H. Nakada, T. Murotani, Nakamura Lab., Kobe University</p>
+
+        </div>
+
+    </div>
+
+</html>

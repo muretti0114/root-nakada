@@ -22,4 +22,10 @@ public interface ShelterRepository extends CrudRepository<Shelter, Long> {
         nativeQuery = true
     )
     public Iterable<Shelter> findShelterByDistance( Double userLng, Double userLat, Double distance );
+
+    @Query(
+        value = "SELECT * FROM shelter s WHERE s.name like %?1% OR s.address like %?1%",
+        nativeQuery = true
+    )
+    public Iterable<Shelter> findShelterByKeyword( String keyword );
 }

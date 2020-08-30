@@ -3,7 +3,7 @@ package jp.kobe_u.root.shelter_navi.form;
 import lombok.Data;
 
 @Data
-public class SearchForm {
+public class SearchByDistanceForm {
     /**
      * distance, userLng, userLat >= 0
      * 等のValidationをかける

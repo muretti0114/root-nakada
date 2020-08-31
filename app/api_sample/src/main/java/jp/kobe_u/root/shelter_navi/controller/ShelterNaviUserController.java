@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 //import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.extern.slf4j.Slf4j;
 import jp.kobe_u.root.shelter_navi.controller.response.ShelterNaviResponse;
 import jp.kobe_u.root.shelter_navi.entity.Shelter;
-import jp.kobe_u.root.shelter_navi.form.SearchForm;
+import jp.kobe_u.root.shelter_navi.form.SearchByDistanceForm;
+import jp.kobe_u.root.shelter_navi.form.SearchByKeywordForm;
 import jp.kobe_u.root.shelter_navi.service.ShelterNaviService;
 
 @RestController
@@ -40,22 +40,24 @@ public class ShelterNaviUserController {
         return ShelterNaviResponse.createSuccessResponse( shelter );
     }
 
-    @GetMapping( "/search" )
-    public ShelterNaviResponse searchSheltersByDistance( @RequestBody SearchForm form ) {
-        List<Shelter> shelters = shelterNaviService.searchSheltersByDistance( form );
+    @GetMapping( "/search/distance" )
+    public ShelterNaviResponse searchSheltersByDistance( @RequestBody SearchByDistanceForm form ) {
+        List<Shelter> shelter_list = shelterNaviService.searchSheltersByDistance( form );
 
-        return ShelterNaviResponse.createSuccessResponse( shelters );
+        return ShelterNaviResponse.createSuccessResponse( shelter_list );
     }
 
-    /*
-    @PostMapping( "/{shelter_id}/check_in" )
-    public ShelterNaviResponse checkInShelter( ) {
+    @GetMapping( "/search/keyword" )
+    public ShelterNaviResponse searchSheltersByKeyword( @RequestBody SearchByKeywordForm form ) {
+        List<Shelter> shelter_list = shelterNaviService.searchSheltersByKeyword( form );
 
+        return ShelterNaviResponse.createSuccessResponse( shelter_list );
     }
 
-    @PostMapping( "/{shelter_id}/check_out" )
-    public ShelterNaviResponse checkOutShelter( ) {
+    @GetMapping( "" )
+    public ShelterNaviResponse getAllShelters() {
+        log.info( "Getting all shelters..." );
 
+        return ShelterNaviResponse.createSuccessResponse( shelterNaviService.getAllShelters() );
     }
-    */
 }

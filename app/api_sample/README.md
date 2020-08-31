@@ -2,13 +2,13 @@
 ## getShelter
 idを基にデータベースから避難所の情報を取得する
 - APIをたたく際のendpoint
-    - ~/shelters/{shelter_id}
+    - https://wsapp.cs.kobe-u.ac.jp/shelter_navi/shelters/{shelter_id}
 - {shelter_id} には指定したい避難所のidを入れる
 - idの入れ方は，ajax等でAPIをたたく際にURLを指定するので，取得したい避難所のidを2028100001とすると，下記のようにすればよい
 
 ```js:shelterNavi.js
 
-let endpoint = "~/shelters";
+let endpoint = "https://wsapp.cs.kobe-u.ac.jp/shelter_navi/shelters";
 let id = $( '#shelter_id' ).val(); // 中身は2028100001
 
 $.ajax({
@@ -23,16 +23,16 @@ $.ajax({
 ## getAllShelters
 すべての避難所の情報を取得する
 - APIをたたく際のendpoint
-    - ~/shelters
+    - https://wsapp.cs.kobe-u.ac.jp/shelter_navi/shelters
 - 下記のように指定することですべての避難所の情報が返ってくる
 
 ```js:shelterNavi.js
 
-let endpoint = "~/shelters";
+let endpoint = "https://wsapp.cs.kobe-u.ac.jp/shelter_navi/shelters";
 
 $.ajax({
     type: "GET",
-    url: endpoint + "/" + id,
+    url: endpoint,
     dataType: "JSON",
     // 略
 })
@@ -42,7 +42,7 @@ $.ajax({
 ## searchSheltersByDistance
 ユーザの現在地から半径dkm以内にある避難所の情報を取得する
 - APIをたたく際のendpoint
-    - ~/shelters/search/distance
+    - https://wsapp.cs.kobe-u.ac.jp/shelter_navi/shelters/search/distance
 - このAPIをたたく際は以下の3つのデータが必要
     - userLng：ユーザの現在地の経度
     - userLat：ユーザの現在地の緯度
@@ -52,7 +52,7 @@ $.ajax({
 
 ```js:shelterNavi.js
 
-let endpoint = "~/shelters";
+let endpoint = "https://wsapp.cs.kobe-u.ac.jp/shelter_navi/shelters";
 let data = {
     "userLng": 134.3756, // 経度：134.3756
     "userLat": 34.8381,  // 緯度：34.8381
@@ -72,7 +72,7 @@ $.ajax({
 ## searchSheltersByKeyword
 キーワード指定によるあいまい検索（部分一致検索）
 - APIをたたく際のendpoint
-    - ~/shelters/search/keyword
+    - https://wsapp.cs.kobe-u.ac.jp/shelter_navi/shelters/search/keyword
 - このAPIをたたく際は以下の1つのデータが必要
     - keyword：避難所の名前，または住所に含まれていそうな文字列
 - 上記のデータはajax等でdataとして指定する必要がある（指定する際の名前は上記の通りに）
@@ -80,7 +80,7 @@ $.ajax({
 
 ```js:shelterNavi.js
 
-let endpoint = "~/shelters";
+let endpoint = "https://wsapp.cs.kobe-u.ac.jp/shelter_navi/shelters";
 let data = {
     "keyword": "城乾"
 }

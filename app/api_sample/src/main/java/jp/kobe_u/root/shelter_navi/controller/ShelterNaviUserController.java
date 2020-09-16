@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 //import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 //import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -41,15 +42,15 @@ public class ShelterNaviUserController {
     }
 
     @GetMapping( "/search/distance" )
-    public ShelterNaviResponse searchSheltersByDistance( @RequestBody SearchByDistanceForm form ) {
-        List<Shelter> shelter_list = shelterNaviService.searchSheltersByDistance( form );
+    public ShelterNaviResponse searchSheltersByDistance( @RequestParam Double userLng, @RequestParam Double userLat, @RequestParam Double distance ) {
+        List<Shelter> shelter_list = shelterNaviService.searchSheltersByDistance( userLng, userLat, distance );
 
         return ShelterNaviResponse.createSuccessResponse( shelter_list );
     }
 
     @GetMapping( "/search/keyword" )
-    public ShelterNaviResponse searchSheltersByKeyword( @RequestBody SearchByKeywordForm form ) {
-        List<Shelter> shelter_list = shelterNaviService.searchSheltersByKeyword( form );
+    public ShelterNaviResponse searchSheltersByKeyword( @RequestParam String keyword ) {
+        List<Shelter> shelter_list = shelterNaviService.searchSheltersByKeyword( keyword );
 
         return ShelterNaviResponse.createSuccessResponse( shelter_list );
     }

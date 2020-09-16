@@ -11,9 +11,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     <script type="text/javascript" src="js/jquery-3.5.1.js"></script>
     <script type="text/javascript" src="js/bootstrap.js"></script> 
-    <script src="js/shelterNavi.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRxpZ0mUDrWN7QBUWnBnX2QOcbhGvBwbQ&callback=initMap">
-    </script>
+    
     <style>
         nav .navbar-brand,
         nav .navbar-nav li a {
@@ -78,7 +76,10 @@
         <input type="form" id="shelter_id">
         <input type="button" value="検索" onclick="f();">
         <result></result>
-        <div id="map"></div>
+        <div id="map"><script src="js/shelterNavi.js"></script></div>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRxpZ0mUDrWN7QBUWnBnX2QOcbhGvBwbQ&callback=initMap" async>
+        </script>
+    
         <!--城乾中は2820100116-->
         <div id="contents"></div>
         <p class="mt-5 mb-3 text-muted">&copy; 2020 H. Nakada, T. Murotani, Nakamura Lab., Kobe University</p>

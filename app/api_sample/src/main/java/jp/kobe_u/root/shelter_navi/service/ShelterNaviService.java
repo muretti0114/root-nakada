@@ -57,26 +57,26 @@ public class ShelterNaviService {
         return shelter;
     }
 
-    public List<Shelter> searchSheltersByDistance( SearchByDistanceForm form ) {
-        Iterable<Shelter> all_shelters = shelters.findShelterByDistance( form.getUserLng(), form.getUserLat(), form.getDistance() );
+    public List<Shelter> searchSheltersByDistance( Double userLng, Double userLat, Double distance ) {
+        Iterable<Shelter> all_shelters = shelters.findShelterByDistance( userLng, userLat, distance );
 
         List<Shelter> shelter_list = new ArrayList<Shelter>();
 
         all_shelters.forEach( shelter_list::add );
 
-        if ( shelter_list.isEmpty() ) throw new ShelterNotFoundException( ShelterNotFoundException.ACCOUNT_NOT_FOUND, "Shelters in " + form.getDistance() + "km are not found." );
+        if ( shelter_list.isEmpty() ) throw new ShelterNotFoundException( ShelterNotFoundException.ACCOUNT_NOT_FOUND, "Shelters in " + distance + "km are not found." );
         
         return shelter_list;
     }
 
-    public List<Shelter> searchSheltersByKeyword( SearchByKeywordForm form ) {
-        Iterable<Shelter> all_shelters = shelters.findShelterByKeyword( form.getKeyword() );
+    public List<Shelter> searchSheltersByKeyword( String keyword ) {
+        Iterable<Shelter> all_shelters = shelters.findShelterByKeyword( keyword );
 
         List<Shelter> shelter_list = new ArrayList<Shelter>();
 
         all_shelters.forEach( shelter_list::add );
 
-        if ( shelter_list.isEmpty() ) throw new ShelterNotFoundException( ShelterNotFoundException.ACCOUNT_NOT_FOUND, "There is no shelter that includes " + form.getKeyword() + " in its name or address." );
+        if ( shelter_list.isEmpty() ) throw new ShelterNotFoundException( ShelterNotFoundException.ACCOUNT_NOT_FOUND, "There is no shelter that includes " + keyword + " in its name or address." );
         
         return shelter_list;
     }

@@ -23,15 +23,15 @@
             color: white !important;
         }
         /* for dropdowns only */
-        
+
         nav .navbar-nav .dropdown-menu {
             background-color: #a65e09;
         }
-        
+
         nav .navbar-nav .dropdown-menu>li>a {
             color: #fff;
         }
-        
+
         nav .navbar-nav .dropdown-menu>li>a:hover,
         nav .navbar-nav .dropdown-menu>li>a:focus {
             color: #a65e09;
@@ -75,9 +75,12 @@
     </nav>
     <div class="container">
         <h4 class="mt-5 mb-4">避難所検索</h4>
-        <label>地図の中心座標: </label> <span id=curLat></span>, <span id="curLng"></span>
+        <button type="button" class='btn btn-primary' onclick='initMap();'>現在地に移動</button>
         <div id="gmap" class="gmap">
         </div>
+        <table id='shelterlist' class='table'>
+          <tr><th>#</th><th>避難所名</th><th>住所</th><th>混雑状況</th></tr>
+        </table>
         <label>避難所IDで検索する
         </label><br>
         <input type="form" id="shelter_id">

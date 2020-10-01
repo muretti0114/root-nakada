@@ -47,7 +47,7 @@ function createShelter() {
         "local_government_code": local_government_code
     };
 
-    /* 
+    /*
         contentTypeなし，JSON.stringfyあり -> 415
         contentTypeあり，JSON.stringfyなし -> 400
         どっちもなし -> 415
@@ -244,11 +244,29 @@ function addHinanjo(latlng) {
         function (data, dataType) {
             console.log(data);
             const shelters = data.result;
+            $('#shelterlist').append('<tr><th>#</th><th>避難所名</th><th>住所</th><th>混雑状況</th></tr>');
             shelters.forEach((h, i) => {
+
                 //for (const [i, h] of shelters) {
                 //避難所の緯度・経度
                 let pos = new google.maps.LatLng(h.lat, h.lng);
                 let id = h.id;
+                //ここから中田がコード追加
+                let name = h.name;
+                let address = h.address;
+                let lng = h.lng;
+                let lat = h.lat;
+                let area = h.area;
+                let maxFamilies = h.max_families;
+                let contactPhone = h.contact_phone;
+                let note = h.note;
+                let localGovernmentCode = h.local_government_code;
+
+
+                $('#shelterlist').append('<tr><td>' + String(i+1) + '</td><td>' + name + '</td><td>' + address + '</td><td>' + maxFamilies + '</td></tr>');
+
+                /*<table><tr><th scope="col">避難所ID</th><th scope="col">施設名</th><th scope="col">住所</th><th scope="col">経度</th><th scope="col">緯度</th><th scope="col">地域</th><th scope="col">収容人数</th><th scope="col">電話番号</th><th scope="col">備考</th><th scope="col">地方自治体コード</th></tr></table>*/
+                //ここまで
                 //h用のマーカーを作成
                 marker[id] = new google.maps.Marker({ // マーカーの追加
                     position: pos,
@@ -300,6 +318,9 @@ function clear_all_markers() {
         marker[m] = null;
     }
     marker = {};
+    //中田追加
+    $('#shelterlist tr').remove();
+    //ここまで
 }
 
 

@@ -17,16 +17,16 @@ import lombok.extern.slf4j.Slf4j;
 import jp.kobe_u.root.shelter_navi.controller.response.ShelterNaviResponse;
 import jp.kobe_u.root.shelter_navi.entity.Shelter;
 import jp.kobe_u.root.shelter_navi.form.ShelterForm;
-import jp.kobe_u.root.shelter_navi.service.ShelterNaviService;
+import jp.kobe_u.root.shelter_navi.service.ShelterService;
 
 @RestController
 @Scope( "request" )
 @RequestMapping( "/admin/shelters" )
 @Slf4j // logを扱うのに必要
-public class ShelterNaviAdminController {
+public class ShelterAdminController {
     
     @Autowired
-    private ShelterNaviService shelterNaviService;
+    private ShelterService shelterNaviService;
 
     @PostMapping( "/create" )
     //@RequestMapping(value = "/create", method = {RequestMethod.POST}, consumes = MediaType.APPLICATION_JSON_VALUE)

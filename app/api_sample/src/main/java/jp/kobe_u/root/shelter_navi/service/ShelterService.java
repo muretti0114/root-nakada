@@ -10,13 +10,13 @@ import org.springframework.stereotype.Service;
 import jp.kobe_u.root.shelter_navi.entity.Shelter;
 import jp.kobe_u.root.shelter_navi.exception.ShelterNotFoundException;
 import jp.kobe_u.root.shelter_navi.exception.ShelterValidationException;
-import jp.kobe_u.root.shelter_navi.form.SearchByDistanceForm;
-import jp.kobe_u.root.shelter_navi.form.SearchByKeywordForm;
+//import jp.kobe_u.root.shelter_navi.form.SearchByDistanceForm;
+//import jp.kobe_u.root.shelter_navi.form.SearchByKeywordForm;
 import jp.kobe_u.root.shelter_navi.form.ShelterForm;
 import jp.kobe_u.root.shelter_navi.repository.ShelterRepository;
 
 @Service
-public class ShelterNaviService {
+public class ShelterService {
     
     @Autowired
     private ShelterRepository shelters;

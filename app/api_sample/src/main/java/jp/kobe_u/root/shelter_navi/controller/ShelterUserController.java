@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
+//import org.springframework.web.bind.annotation.RequestBody;
 //import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,18 +19,16 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.extern.slf4j.Slf4j;
 import jp.kobe_u.root.shelter_navi.controller.response.ShelterNaviResponse;
 import jp.kobe_u.root.shelter_navi.entity.Shelter;
-import jp.kobe_u.root.shelter_navi.form.SearchByDistanceForm;
-import jp.kobe_u.root.shelter_navi.form.SearchByKeywordForm;
-import jp.kobe_u.root.shelter_navi.service.ShelterNaviService;
+import jp.kobe_u.root.shelter_navi.service.ShelterService;
 
 @RestController
 @Scope( "request" )
 @RequestMapping( "/shelters" )
 @Slf4j // logを扱うのに必要
-public class ShelterNaviUserController {
+public class ShelterUserController {
     
     @Autowired
-    private ShelterNaviService shelterNaviService;
+    private ShelterService shelterNaviService;
     
     @GetMapping( "/{shelter_id}" )
     public ShelterNaviResponse getShelter( @PathVariable( "shelter_id" ) Long shelter_id ) {

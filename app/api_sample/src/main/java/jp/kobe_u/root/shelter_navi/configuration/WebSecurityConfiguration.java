@@ -36,12 +36,17 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     // 遷移先のURLを返すのではなく200とかのレスポンスを返す
     // ページ遷移はレスポンスの中身を見てクライアント側でやってもらう？
     // クライアント側でのページ遷移後にページ内で必要なユーザ情報等をgetUserInfoから取得
+    // login後はいわゆるホーム画面的なとこに遷移？
+    // 自治体の災害情報，避難情報を表示し，各機能へのリンクボタンを用意？
     @Override
     protected void configure( HttpSecurity http ) throws Exception {
         // 認可の設定
         http.authorizeRequests()
         .antMatchers( "/login" ).permitAll()                // ログインページは誰でも許可
+        // users/create も誰でもできるようにする？
         .antMatchers( "/users/**" ).hasRole( "ADMIN" )      // ユーザ管理は管理者のみ
+        // /admin/users/** はADMINのみ
+        // /uses/** はCITIZENも使用可能とできるようにAdminControllerとCitizenControllerの二つを作る
         .antMatchers( "/shelters/**" ).hasRole( "ADMIN" )   // 避難所は管理者のみ
         .anyRequest().authenticated();                      // それ以外は全て認証必要
 

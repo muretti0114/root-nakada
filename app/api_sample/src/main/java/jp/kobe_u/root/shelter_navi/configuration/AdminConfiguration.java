@@ -10,6 +10,6 @@ import lombok.Data;
 @ConfigurationProperties( prefix="app.admin" )
 public class AdminConfiguration {
     //プロパティは外部ファイルからDIするが，ない場合は下記のデフォルト値を使う
-    private String username="admin";
+    private String email="admin@admin.com";
     private String password="secret";
 }

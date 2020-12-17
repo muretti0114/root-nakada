@@ -1,0 +1,364 @@
+%%「論文」，「レター」，「レター（C分冊）」，「技術研究報告」などのテンプレート
+%% v3.3 [2020/06/02]
+%% 1. 「論文」
+\documentclass[paper]{ieicej}
+%\documentclass[invited]{ieicej}% 招待論文
+%\documentclass[survey]{ieicej}% サーベイ論文
+%\documentclass[comment]{ieicej}% 解説論文
+%\usepackage[dvips]{graphicx}
+%\usepackage[dvipdfmx]{graphicx,xcolor}
+\usepackage[fleqn]{amsmath}
+\usepackage{newtxtext}% 英数字フォントの設定を変更しないでください
+\usepackage[varg]{newtxmath}% % 英数字フォントの設定を変更しないでください
+\usepackage{latexsym}
+%\usepackage{amssymb}
+
+\setcounter{page}{1}
+
+\field{}
+\jtitle{}
+\etitle{}
+\authorlist{%
+ \authorentry{}{}{}\MembershipNumber{}
+ %\authorentry{和文著者名}{英文著者名}{所属ラベル}\MembershipNumber{}
+ %\authorentry[メールアドレス]{和文著者名}{英文著者名}{所属ラベル}\MembershipNumber{}
+ %\authorentry{和文著者名}{英文著者名}{所属ラベル}[現在の所属ラベル]\MembershipNumber{}
+}
+\affiliate[]{}{}
+%\affiliate[所属ラベル]{和文所属}{英文所属}
+%\paffiliate[]{}
+%\paffiliate[現在の所属ラベル]{和文所属}
+\jalcdoi{???????????}% ← このままにしておいてください
+
+\begin{document}
+\begin{abstract}
+%和文あらまし 500字以内
+\end{abstract}
+\begin{keyword}
+%和文キーワード 4〜5語
+\end{keyword}
+\begin{eabstract}
+%英文アブストラクト 100 words
+\end{eabstract}
+\begin{ekeyword}
+%英文キーワード
+\end{ekeyword}
+\maketitle
+
+\section{はじめに}
+
+\section{準備}
+
+\section{提案手法}
+\subsection{システム概要}
+
+\subsection{ユースケース}
+
+\subsection{システムアーキテクチャ}
+
+\subsection{ドメインモデリング}
+図〇〇にShelterNaviにおけるドメインモデルを示す．
+ShelterNaviには，図〇〇で表されている3つのドメインが存在し，それぞれShelter（避難所），Citizen（住民・ユーザ），Check-In（避難所へのチェックインまたはチェックアウト）となっている．Check-Inドメインを通じてユーザとそのユーザが利用した避難所を関連付けさせるために，Check-Inドメインは必ず1つのCitizenドメインと1つのShelterドメインと結びつく．
+次に，ShelterNaviの各ドメインを構成する要素について説明する．Shelterドメインにおいては，システムがどの避難所か特定するためのIDが必要であり，避難するユーザに向けて避難所の名称，位置情報を示す必要がある．また，本アプリケーションではコロナ禍における避難所での密を考慮すべく，避難所の混雑度も取り扱う．そして，避難所の開放情報も取り扱う．以上のことからShelterドメインでは以下のフィールドを規定する．
+
+\begin{itemize}
+    \item{\textbf{sid：}}避難所ID
+    \item{\textbf{name：}}避難所の名称
+    \item{\textbf{address：}}避難所の住所
+    \item{\textbf{lat：}}避難所の緯度
+    \item{\textbf{lng：}}避難所の経度
+    \item{\textbf{capacity：}}避難所の混雑度
+    \item{\textbf{isActive：}}避難所が利用可能か
+\end{itemize}
+
+続いてCitizenドメインにおいては，ユーザ情報を一意に取り扱うためのユーザIDが必要である．また，本サービスに登録するためのemailアドレスとパスワード，（名前，住所：必要性をどう示すか），そして混雑度を計算するための世帯人数を取り扱う．% 本アプリにおける名前，住所，電話番号の必要性
+以上のことからCitizenドメインでは以下のフィールドを規定する．
+
+\begin{itemize}
+    \item{\textbf{uid：}}ユーザID
+    \item{\textbf{email：}}メールアドレス
+    \item{\textbf{password：}}パスワード
+    \item{\textbf{name：}}ユーザの名前
+    \item{\textbf{address：}}ユーザの住所
+    \item{\textbf{of families：}}世帯人数
+\end{itemize}
+
+最後にCheck-Inドメインにおいては，どのユーザがどの避難所を利用しているかを管理するためにユーザIDと避難所IDが必要である．また，複数の避難所への多重チェックインがないかを確認するために，チェックイン時刻と，チェックアウト時刻も取り扱う．以上のことからCheck-Inドメインでは以下のフィールドを規定する．
+
+\begin{itemize}
+    \item{\textbf{cid：}}チェックインID
+    \item{\textbf{uid：}}ユーザID
+    \item{\textbf{sid：}}避難所ID
+    \item{\textbf{checkin-datetime：}}チェックイン時刻
+    \item{\textbf{checkout-datetime：}}チェックアウト時刻
+\end{itemize}
+
+\subsection{主要なサービス}
+ShelterNaviでは他のアプリケーションとの連携や拡張性を考慮し，HTTPを介して外部から利用できるAPIを配備した．以下にAPIの詳細を示す．
+
+\subsubsection{ユーザサービス}
+\begin{itemize}
+    \item{\textbf{createUser( userForm )：}
+         メールアドレス，パスワード，世帯人数等のユーザ情報を元に新規アカウントを作成し，取得する．}
+    \item{\textbf{getUser( uid )：}
+         ユーザIDを指定することで該当するユーザアカウントを取得する．}
+    \item{\textbf{deleteUser( uid )：}
+         ユーザIDを指定することで該当するユーザアカウントを削除する．}
+\end{itemize}
+
+\subsubsection{シェルターサービス}
+\begin{itemize}
+    \item{\textbf{createShelter( shelterForm )：}
+         避難所ID，避難所名，位置情報を基に避難所データを作成し，取得する．}
+    \item{\textbf{getShelter( sid )：}
+         避難所IDを指定することで該当する避難所データを取得する．}
+    \item{\textbf{deleteShelter( sid )：}
+         避難所IDを指定することで該当する避難所データを削除する．}
+    \item{\textbf{clearAllShelters()：}
+         全ての避難所データを削除する．}
+    \item{\textbf{getAllShelters()：}
+         全ての避難所データを取得する．}
+    \item{\textbf{searchSheltersByDistance( lng, lat, distance )：}
+         経度，緯度，そして距離を指定することで，指定位置座標(lng, lat)から半径distance$\rm[km]$以内にある避難所データ全てを取得する．}
+    \item{\textbf{searchSheltersByKeyword( keyword )：}
+         文字列を指定することで，全避難所データの避難所名，または避難所の住所に部分一致するものがないか検索し，該当するものがあればそれらを全て取得する．}
+\end{itemize}
+
+%半径dkmのシェルターを検索する方法→「4. 実装」に書く？
+
+\subsubsection{チェックインサービス}
+\begin{itemize}
+    \item{\textbf{checkIn( uid, sid )：}
+         ユーザIDと避難所IDを指定することで，チェックインデータを作成し，時刻を記録し，取得する．}
+    \item{\textbf{checkOut( uid, sid )：}
+         %チェックアウトする際のチェックインデータの指定方法はどうするか．}
+    }
+\end{itemize}
+混雑度の算出方法　現在のチェックイン人数／避難所のキャパシティ
+% checkIn()をたたいた際に，指定したsidの避難所の混雑度を更新する．（避難所エンティティに混雑度も持たせる？）
+
+\section{実装}
+\subsection{ShelterNaviプロトタイプの実装}
+今回は以下の開発環境で「ユーザサービス」，「シェルターサービス」，また「チェックインサービス」の一部の開発を行った．
+\begin{itemize}
+    \item サーバ開発言語：Java
+    \item クライアント開発言語：HTML5,JavaScript
+    \item CSSライブラリ：BootStrap
+    \item データベース：MySQL 8.0.20
+    \item Webサーバ：Apache Tomcat
+    \item Webサービスフレームワーク：SpringBoot（Java）
+\end{itemize}
+以下では実装した機能の詳細について述べる．
+
+\subsection{ログイン}
+今回の実装においては，セキュリティ性を担保するためにJavaのフレームワークであるSpring Securityを用いる．このフレームワークの機能を利用すれば，指定したURL内で，IDとパスワードをPostする特定のAPIを利用することで認証が可能になる．また，ユーザオブジェクトに権限を付与し，その権限に応じた認可を与えることも可能になる．本アプリケーションでは，通常の工程でユーザを作成した場合，CITIZEN（住民・一般ユーザ）の役割が付与される．実際には，ログイン機能における認証時にこの役割を見ることで，セッションに対して役割に対応した権限を付与する．これによりログイン後のユーザに対する各ページへの認可が可能になる．
+
+%\subsection{避難所の登録}
+%実際は管理者が直接データを入れることになりそうなので機能ではない？
+
+\subsection{地図上への避難所の可視化}
+本アプリケーションでは，避難所を可視化する上でGoogle Mapを利用している．避難所を取得するAPIで避難所データを取得し，それらのデータをGoogleMapsAPIで利用することで，地図上への避難所の可視化を行っている．また，ShelterNaviではユーザの現在位置に応じて地図上に表示する避難所を変更しており，これは「3.5　主要なサービス」で言及したsearchSheltersByDistance(lng, lat, distance)をを利用している．このAPIでは地球上における大圏（大円）距離を計算する手法を使用しており，地球の半径を6371[km]，ユーザの経度座標をlng，緯度座標をlat，各避難所データの経度座標をs\_lng，緯度座標をs\_latとし，ユーザから半径distance[km]以内に存在する避難所を検索するものとして以下の計算式を用いる．
+
+\begin{eqnarray*}
+    6371 \arccos ( \cos( radians( lat ) ) * \cos( radians( s\_lat ) ) \\* \cos( radians( s\_lng ) - radians( lng ) ) \\+ \sin( radians( lat ) ) * \sin( radians( s\_lat ) ) ) \leqq distance
+\end{eqnarray*}
+
+上記の計算により，ユーザから半径distance[km]以内の避難所を特定することが可能になる．
+
+%\subsection{チェックイン} cos( radians( lat ) ) * cos( radians( s_lat ) ) * cos( radians( s_lng ) - radians( lng ) ) + sin( radians( lat ) ) * sin( radians( s_lat ) )
+
+
+\subsection{}
+
+\section{考察・評価}
+
+\section{おわりに}
+
+\ack %% 謝辞
+
+%\bibliographystyle{sieicej}
+%\bibliography{myrefs}
+\begin{thebibliography}{99}% 文献数が10未満の時 {9}
+\bibitem{}
+\end{thebibliography}
+
+\appendix
+
+\begin{biography}
+\profile{}{}{}
+%\profile{会員種別}{名前}{紹介文}% 顔写真あり
+%\profile*{会員種別}{名前}{紹介文}% 顔写真なし
+\end{biography}
+
+\end{document}
+
+
+
+%% 2. 「レター」
+\documentclass[letter]{ieicej}
+%\usepackage[dvips]{graphicx}
+%\usepackage[dvipdfmx]{graphicx,xcolor}
+\usepackage[fleqn]{amsmath}
+\usepackage{newtxtext}% 英数字フォントの設定を変更しないでください
+\usepackage[varg]{newtxmath}% % 英数字フォントの設定を変更しないでください
+\usepackage{latexsym}
+%\usepackage{amssymb}
+
+\setcounter{page}{1}
+
+\typeofletter{研究速報}
+%\typeofletter{紙上討論}
+%\typeofletter{問題提起}
+%\typeofletter{ショートノート}
+\field{}
+\jtitle{}
+\etitle{}
+\authorlist{%
+ \authorentry{}{}{}{}\MembershipNumber{}
+ %\authorentry{和文著者名}{英文著者名}{会員種別}{所属ラベル}\MembershipNumber{}
+ %\authorentry{和文著者名}{英文著者名}{会員種別}{所属ラベル}[現在の所属ラベル]\MembershipNumber{}
+}
+\affiliate[]{}{}
+%\affiliate[所属ラベル]{和文所属}{英文所属}
+%\paffiliate[]{}
+%\paffiliate[現在の所属ラベル]{和文所属}
+\jalcdoi{???????????}% ← このままにしておいてください
+
+\begin{document}
+\maketitle
+\begin{abstract}
+%和文あらまし 120字以内
+\end{abstract}
+\begin{keyword}
+%和文キーワード 4〜5語
+\end{keyword}
+\begin{eabstract}
+%英文アブストラクト 50 words
+\end{eabstract}
+\begin{ekeyword}
+%英文キーワード
+\end{ekeyword}
+
+\section{まえがき}
+
+
+\ack %% 謝辞
+
+%\bibliographystyle{sieicej}
+%\bibliography{myrefs}
+\begin{thebibliography}{99}% 文献数が10未満の時 {9}
+\bibitem{}
+\end{thebibliography}
+
+\appendix
+\section{}
+
+\end{document}
+
+
+%% 3. 「レター（C分冊）」
+\documentclass[electronicsletter]{ieicej}
+%\usepackage[dvips]{graphicx}
+%\usepackage[dvipdfmx]{graphicx,xcolor}
+\usepackage[fleqn]{amsmath}
+\usepackage{newtxtext}% 英数字フォントの設定を変更しないでください
+\usepackage[varg]{newtxmath}% % 英数字フォントの設定を変更しないでください
+\usepackage{latexsym}
+%\usepackage{amssymb}
+
+\setcounter{page}{1}
+
+\field{}
+\jtitle{}
+\etitle{}
+\authorlist{%
+ \authorentry{}{}{}{}\MembershipNumber{}
+ %\authorentry{和文著者名}{英文著者名}{会員種別}{所属ラベル}\MembershipNumber{}
+ %\authorentry{和文著者名}{英文著者名}{会員種別}{所属ラベル}[現在の所属ラベル]\MembershipNumber{}
+}
+\affiliate[]{}{}
+%\affiliate[所属ラベル]{和文所属}{英文所属}
+%\paffiliate[]{}
+%\paffiliate[現在の所属ラベル]{和文所属}
+\jalcdoi{???????????}% ← このままにしておいてください
+
+\begin{document}
+\begin{abstract}
+%和文あらまし 120字以内
+\end{abstract}
+\begin{keyword}
+%和文キーワード 4〜5語
+\end{keyword}
+\begin{eabstract}
+%英文アブストラクト 50 words
+\end{eabstract}
+\begin{ekeyword}
+%英文キーワード
+\end{ekeyword}
+\maketitle
+
+\section{まえがき}
+
+
+\ack %% 謝辞
+
+%\bibliographystyle{sieicej}
+%\bibliography{myrefs}
+\begin{thebibliography}{99}% 文献数が 10 未満の時 {9}
+\bibitem{}
+\end{thebibliography}
+
+\appendix
+\section{}
+
+\end{document}
+
+
+
+%% 4. 「技術研究報告」
+\documentclass[technicalreport]{ieicej}
+%\usepackage[dvips]{graphicx}
+%\usepackage[dvipdfmx]{graphicx,xcolor}
+\usepackage[fleqn]{amsmath}
+\usepackage{newtxtext}% 英数字フォントの設定を変更しないでください
+\usepackage[varg]{newtxmath}% % 英数字フォントの設定を変更しないでください
+\usepackage{latexsym}
+%\usepackage{amssymb}
+
+\jtitle{}
+\jsubtitle{}
+\etitle{}
+\esubtitle{}
+\authorlist{%
+ \authorentry[]{}{}{}
+% \authorentry[メールアドレス]{和文著者名}{英文著者名}{所属ラベル}
+}
+\affiliate[]{}{}
+%\affiliate[所属ラベル]{和文勤務先\\ 連絡先住所}{英文勤務先\\ 英文連絡先住所}
+\jalcdoi{???????????}% ← このままにしておいてください
+
+\begin{document}
+\begin{jabstract}
+%和文あらまし
+\end{jabstract}
+\begin{jkeyword}
+%和文キーワード
+\end{jkeyword}
+\begin{eabstract}
+%英文アブストラクト
+\end{eabstract}
+\begin{ekeyword}
+%英文キーワード
+\end{ekeyword}
+\maketitle
+
+\section{はじめに}
+
+
+%\bibliographystyle{sieicej}
+%\bibliography{myrefs}
+\begin{thebibliography}{99}% 文献数が10未満の時 {9}
+\bibitem{}
+\end{thebibliography}
+
+\end{document}

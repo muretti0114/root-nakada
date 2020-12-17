@@ -69,8 +69,6 @@ public class UserService implements UserDetailsService {
         
         User user = users.findById( email ).orElseThrow( () -> new ShelterNaviException( ShelterNaviException.USER_NOT_FOUND, email + ": No such user" ) );
 
-        log.warn( "Email: " + user.getEmail() + "権限：" + user.getRole() );
-
         /**
          * 避難所の管理者と利用者で権限を分ける？
          * 権限を付与するためにUserDetailsを継承したUserSessionクラスを実装する必要あり

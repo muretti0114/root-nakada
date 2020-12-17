@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 //import jp.kobe_u.root.shelter_navi.domain.exception.ShelterNaviException;
 //import lombok.extern.slf4j.Slf4j;
 
+/*
 @Controller
 public class LoginController {
     // thymeleaf使わないならいらない？
@@ -29,9 +30,7 @@ public class LoginController {
             //return "error.html";
             //System.out.println( "error" );
             model.addAttribute( "message","error" );
-        } /*else {
-            throw new ShelterNaviException( ShelterNaviException.ERROR, "ログインに失敗" );
-        }*/
+        }
         
         return "login";
     }
@@ -40,10 +39,5 @@ public class LoginController {
 	public String redirectToMainPage() {
 		return "redirect:/login";
     }
-    
-    @RequestMapping("/test")
-    @ResponseBody
-    public String test() {
-            return "Hello World";
-    }
 }
+*/

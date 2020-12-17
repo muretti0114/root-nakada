@@ -26,7 +26,10 @@ public class UserForm {
     String password2;
 
     @Size( max = 32 )
-    String name;
+    String lastName;
+
+    @Size( max = 32 )
+    String firstName;
 
     @Size( max = 32 )
     String phoneNumber;
@@ -38,10 +41,12 @@ public class UserForm {
     int numOfHouseholds;
 
     public User toEntity() {
-        return new User( email, password, name, phoneNumber, address, numOfHouseholds, User.Role.CITIZEN );
+        return new User( email, password, lastName + firstName, phoneNumber, address, numOfHouseholds, User.Role.CITIZEN );
     }
 
+    /*
     public static UserForm toForm( User user ) {
         return new UserForm( user.getEmail(), user.getPassword(), user.getPassword(), user.getName(), user.getPhoneNumber(), user.getAddress(), user.getNumOfHouseholds() );
     } 
+    */
 }

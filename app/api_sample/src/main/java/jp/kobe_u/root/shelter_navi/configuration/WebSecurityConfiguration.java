@@ -45,10 +45,15 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
         .antMatchers( "/login" ).permitAll()                // ログインページは誰でも許可
+        .antMatchers( "/users/**" ).permitAll()
+        .antMatchers( "/signup" ).permitAll()
+        .antMatchers( "/hello/**" ).permitAll()
         //.antMatchers( "/shelters/**" ).permitAll()
         //.antMatchers( "/users/create" ).permitAll()         // users/create も誰でもできるようにする？
         //.antMatchers( "/admin/users/**" ).hasRole( "ADMIN" )
         //.antMatchers( "/admin/users/**" ).hasRole( "CITIZEN" )
+        //.antMatchers( "/users/**" ).hasRole( "ADMIN" )
+        //.antMatchers( "/users/info" ).hasRole( "CITIZEN" )
         .antMatchers( "/admin/shelters/**" ).hasRole( "ADMIN" )
         .antMatchers( "/shelters/**" ).hasRole( "ADMIN" )
         //.antMatchers( "/admin/shelters/**" ).hasRole( "GOVERNMENT" )
@@ -61,13 +66,13 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
             .loginProcessingUrl( "/authenticate" )          // フォームのPOST先URL．認証処理を実行する
             .usernameParameter( "email" )                   // ユーザ名に該当するリクエストパラメタ
             .passwordParameter( "password" )                // パスワードに該当するリクエストパラメタ
-            .defaultSuccessUrl( "/shelters", true )         // 成功時のページ (trueは以前どこにアクセスしてもここに遷移する設定)
+            .defaultSuccessUrl( "/main", true )         // 成功時のページ (trueは以前どこにアクセスしてもここに遷移する設定)
             .failureUrl( "/login?error" );                  // 失敗時のページ
             //.permitAll();
 
         // ログアウトの設定
         http.logout()
-            //.logoutUrl( "/logout" )                         // ログアウトのURL
+            .logoutUrl( "/logout" )                         // ログアウトのURL
             .logoutSuccessUrl( "/login?logout" )            // ログアウト完了したらこのページへ
             .deleteCookies( "JSESSIONID" )                  // クッキー削除
             .invalidateHttpSession( true )                  // セッション情報消去

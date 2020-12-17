@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <div th:replace="nav.html :: pageHeader('避難所の状態')"></div>
+    <div th:replace="nav.html :: map"></div>
+</head>
+
+<body>
+    <div th:insert="nav.html :: navbar"></div>
+    
+    <div class="container">
+        <h4 class="mt-5 mb-4">避難所検索</h4>
+        <button type="button" class='btn btn-primary' onclick='initMap();'>現在地に移動</button>
+        <div id="gmap" class="gmap">
+        </div>
+        <table id='shelterlist' class='table'>
+          <tr><th>#</th><th>避難所名</th><th>住所</th><th>混雑状況</th></tr>
+        </table>
+        <label>避難所IDで検索する
+        </label><br>
+        <input type="form" id="shelter_id">
+        <input type="button" value="検索" onclick="f();">
+        <result></result>
+    </div>
+
+    <!--城乾中は2820100116-->
+    <div id="contents"></div>
+    <p class="mt-5 mb-3 text-muted">&copy; 2020 H. Nakada, T. Murotani, Nakamura Lab., Kobe University</p>
+    </div>
+    <script>
+        initMap();
+    </script>
+
+</body>
+
+</html>

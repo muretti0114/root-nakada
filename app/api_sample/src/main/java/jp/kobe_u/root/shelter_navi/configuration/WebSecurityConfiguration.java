@@ -2,6 +2,7 @@ package jp.kobe_u.root.shelter_navi.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -9,7 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import jp.kobe_u.root.shelter_navi.service.UserService;
+import jp.kobe_u.root.shelter_navi.domain.service.UserService;
 
 @Configuration
 @EnableWebSecurity
@@ -41,14 +42,22 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure( HttpSecurity http ) throws Exception {
         // 認可の設定
+
         http.authorizeRequests()
         .antMatchers( "/login" ).permitAll()                // ログインページは誰でも許可
-        // users/create も誰でもできるようにする？
-        .antMatchers( "/users/**" ).hasRole( "ADMIN" )      // ユーザ管理は管理者のみ
-        // /admin/users/** はADMINのみ
-        // /uses/** はCITIZENも使用可能とできるようにAdminControllerとCitizenControllerの二つを作る
-        .antMatchers( "/shelters/**" ).hasRole( "ADMIN" )   // 避難所は管理者のみ
-        .anyRequest().authenticated();                      // それ以外は全て認証必要
+        .antMatchers( "/users/**" ).permitAll()
+        .antMatchers( "/signup" ).permitAll()
+        .antMatchers( "/hello/**" ).permitAll()
+        //.antMatchers( "/shelters/**" ).permitAll()
+        //.antMatchers( "/users/create" ).permitAll()         // users/create も誰でもできるようにする？
+        //.antMatchers( "/admin/users/**" ).hasRole( "ADMIN" )
+        //.antMatchers( "/admin/users/**" ).hasRole( "CITIZEN" )
+        //.antMatchers( "/users/**" ).hasRole( "ADMIN" )
+        //.antMatchers( "/users/info" ).hasRole( "CITIZEN" )
+        .antMatchers( "/admin/shelters/**" ).hasRole( "ADMIN" )
+        .antMatchers( "/shelters/**" ).hasRole( "ADMIN" )
+        //.antMatchers( "/admin/shelters/**" ).hasRole( "GOVERNMENT" )
+        .anyRequest().authenticated();                     // それ以外は全て認証必要
 
         // ログインの設定
         // 遷移後のURI，ページで何をしたいのか要相談
@@ -57,8 +66,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
             .loginProcessingUrl( "/authenticate" )          // フォームのPOST先URL．認証処理を実行する
             .usernameParameter( "email" )                   // ユーザ名に該当するリクエストパラメタ
             .passwordParameter( "password" )                // パスワードに該当するリクエストパラメタ
-            .defaultSuccessUrl( "/", true )                 // 成功時のページ (trueは以前どこにアクセスしてもここに遷移する設定)
+            .defaultSuccessUrl( "/main", true )         // 成功時のページ (trueは以前どこにアクセスしてもここに遷移する設定)
             .failureUrl( "/login?error" );                  // 失敗時のページ
+            //.permitAll();
 
         // ログアウトの設定
         http.logout()
@@ -67,6 +77,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
             .deleteCookies( "JSESSIONID" )                  // クッキー削除
             .invalidateHttpSession( true )                  // セッション情報消去
             .permitAll();                                   // ログアウトはいつでもアクセスできる
+    
+        //http.csrf().disable();
     }
 
     @Autowired
@@ -75,6 +87,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         auth.userDetailsService( userService )   // 認証は予約アプリのユーザサービスを使う
             .passwordEncoder( passwordEncoder ); // パスワードはアプリ共通のものを使う
         // ついでにここで管理者ユーザを登録しておく
-        userService.registerAdmin( adminConfig.getUsername(), adminConfig.getPassword() );
+        userService.registerAdmin( adminConfig.getEmail(), adminConfig.getPassword() );
     }
 }

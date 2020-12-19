@@ -1,10 +1,9 @@
 %%「論文」，「レター」，「レター（C分冊）」，「技術研究報告」などのテンプレート
 %% v3.3 [2020/06/02]
-%% 1. 「論文」
-\documentclass[paper]{ieicej}
-%\documentclass[invited]{ieicej}% 招待論文
-%\documentclass[survey]{ieicej}% サーベイ論文
-%\documentclass[comment]{ieicej}% 解説論文
+
+
+%% 4. 「技術研究報告」
+\documentclass[technicalreport]{ieicej}
 %\usepackage[dvips]{graphicx}
 %\usepackage[dvipdfmx]{graphicx,xcolor}
 \usepackage[fleqn]{amsmath}
@@ -13,32 +12,27 @@
 \usepackage{latexsym}
 %\usepackage{amssymb}
 
-\setcounter{page}{1}
-
-\field{}
 \jtitle{}
+\jsubtitle{}
 \etitle{}
+\esubtitle{}
 \authorlist{%
- \authorentry{}{}{}\MembershipNumber{}
- %\authorentry{和文著者名}{英文著者名}{所属ラベル}\MembershipNumber{}
- %\authorentry[メールアドレス]{和文著者名}{英文著者名}{所属ラベル}\MembershipNumber{}
- %\authorentry{和文著者名}{英文著者名}{所属ラベル}[現在の所属ラベル]\MembershipNumber{}
+ \authorentry[]{}{}{}
+% \authorentry[メールアドレス]{和文著者名}{英文著者名}{所属ラベル}
 }
 \affiliate[]{}{}
-%\affiliate[所属ラベル]{和文所属}{英文所属}
-%\paffiliate[]{}
-%\paffiliate[現在の所属ラベル]{和文所属}
+%\affiliate[所属ラベル]{和文勤務先\\ 連絡先住所}{英文勤務先\\ 英文連絡先住所}
 \jalcdoi{???????????}% ← このままにしておいてください
 
 \begin{document}
-\begin{abstract}
-%和文あらまし 500字以内
-\end{abstract}
-\begin{keyword}
-%和文キーワード 4〜5語
-\end{keyword}
+\begin{jabstract}
+%和文あらまし
+\end{jabstract}
+\begin{jkeyword}
+%和文キーワード
+\end{jkeyword}
 \begin{eabstract}
-%英文アブストラクト 100 words
+%英文アブストラクト
 \end{eabstract}
 \begin{ekeyword}
 %英文キーワード
@@ -173,6 +167,63 @@ ShelterNaviでは他のアプリケーションとの連携や拡張性を考慮
 \section{考察・評価}
 
 \section{おわりに}
+
+
+%\bibliographystyle{sieicej}
+%\bibliography{myrefs}
+\begin{thebibliography}{99}% 文献数が10未満の時 {9}
+\bibitem{}
+\end{thebibliography}
+
+\end{document}
+
+
+%% 1. 「論文」
+\documentclass[paper]{ieicej}
+%\documentclass[invited]{ieicej}% 招待論文
+%\documentclass[survey]{ieicej}% サーベイ論文
+%\documentclass[comment]{ieicej}% 解説論文
+%\usepackage[dvips]{graphicx}
+%\usepackage[dvipdfmx]{graphicx,xcolor}
+\usepackage[fleqn]{amsmath}
+\usepackage{newtxtext}% 英数字フォントの設定を変更しないでください
+\usepackage[varg]{newtxmath}% % 英数字フォントの設定を変更しないでください
+\usepackage{latexsym}
+%\usepackage{amssymb}
+
+\setcounter{page}{1}
+
+\field{}
+\jtitle{}
+\etitle{}
+\authorlist{%
+ \authorentry{}{}{}\MembershipNumber{}
+ %\authorentry{和文著者名}{英文著者名}{所属ラベル}\MembershipNumber{}
+ %\authorentry[メールアドレス]{和文著者名}{英文著者名}{所属ラベル}\MembershipNumber{}
+ %\authorentry{和文著者名}{英文著者名}{所属ラベル}[現在の所属ラベル]\MembershipNumber{}
+}
+\affiliate[]{}{}
+%\affiliate[所属ラベル]{和文所属}{英文所属}
+%\paffiliate[]{}
+%\paffiliate[現在の所属ラベル]{和文所属}
+\jalcdoi{???????????}% ← このままにしておいてください
+
+\begin{document}
+\begin{abstract}
+%和文あらまし 500字以内
+\end{abstract}
+\begin{keyword}
+%和文キーワード 4〜5語
+\end{keyword}
+\begin{eabstract}
+%英文アブストラクト 100 words
+\end{eabstract}
+\begin{ekeyword}
+%英文キーワード
+\end{ekeyword}
+\maketitle
+
+
 
 \ack %% 謝辞
 
@@ -310,55 +361,5 @@ ShelterNaviでは他のアプリケーションとの連携や拡張性を考慮
 
 \appendix
 \section{}
-
-\end{document}
-
-
-
-%% 4. 「技術研究報告」
-\documentclass[technicalreport]{ieicej}
-%\usepackage[dvips]{graphicx}
-%\usepackage[dvipdfmx]{graphicx,xcolor}
-\usepackage[fleqn]{amsmath}
-\usepackage{newtxtext}% 英数字フォントの設定を変更しないでください
-\usepackage[varg]{newtxmath}% % 英数字フォントの設定を変更しないでください
-\usepackage{latexsym}
-%\usepackage{amssymb}
-
-\jtitle{}
-\jsubtitle{}
-\etitle{}
-\esubtitle{}
-\authorlist{%
- \authorentry[]{}{}{}
-% \authorentry[メールアドレス]{和文著者名}{英文著者名}{所属ラベル}
-}
-\affiliate[]{}{}
-%\affiliate[所属ラベル]{和文勤務先\\ 連絡先住所}{英文勤務先\\ 英文連絡先住所}
-\jalcdoi{???????????}% ← このままにしておいてください
-
-\begin{document}
-\begin{jabstract}
-%和文あらまし
-\end{jabstract}
-\begin{jkeyword}
-%和文キーワード
-\end{jkeyword}
-\begin{eabstract}
-%英文アブストラクト
-\end{eabstract}
-\begin{ekeyword}
-%英文キーワード
-\end{ekeyword}
-\maketitle
-
-\section{はじめに}
-
-
-%\bibliographystyle{sieicej}
-%\bibliography{myrefs}
-\begin{thebibliography}{99}% 文献数が10未満の時 {9}
-\bibitem{}
-\end{thebibliography}
 
 \end{document}

@@ -52,8 +52,8 @@
 
 \subsection{ドメインモデリング}
 図〇〇にShelterNaviにおけるドメインモデルを示す．
-ShelterNaviには，図〇〇で表されている3つのドメインが存在し，それぞれShelter（避難所），Citizen（住民・ユーザ），Check-In（避難所へのチェックインまたはチェックアウト）となっている．Check-Inドメインを通じてユーザとそのユーザが利用した避難所を関連付けさせるために，Check-Inドメインは必ず1つのCitizenドメインと1つのShelterドメインと結びつく．
-次に，ShelterNaviの各ドメインを構成する要素について説明する．Shelterドメインにおいては，システムがどの避難所か特定するためのIDが必要であり，避難するユーザに向けて避難所の名称，位置情報を示す必要がある．また，本アプリケーションではコロナ禍における避難所での密を考慮すべく，避難所の混雑度も取り扱う．そして，避難所の開放情報も取り扱う．以上のことからShelterドメインでは以下のフィールドを規定する．
+ShelterNaviには，図〇〇で表されている5つのドメインが存在し，それぞれShelter（避難所），Citizen（住民・ユーザ），Check-In（避難所へのチェックインまたはチェックアウト），ShelterState（避難所の状態），CitizenState（ユーザの状態）となっている．Check-Inドメインを通じてユーザとそのユーザが利用した避難所を関連付けさせるために，Check-Inドメインは必ず1つのCitizenドメインと1つのShelterドメインと結びつく．また，ShelterStateドメインは各避難所の状態を表しており，CitizenStateドメインはユーザの避難状態を示している．
+以下では，ShelterNaviの各ドメインを構成する要素について説明する．Shelterドメインにおいては，システムがどの避難所か特定するためのIDが必要であり，避難するユーザに向けて避難所の名称，位置情報を示す必要がある．そして，避難所の開放情報も取り扱う．以上のことからShelterドメインでは以下のフィールドを規定する．
 
 \begin{itemize}
     \item{\textbf{sid：}}避難所ID
@@ -61,7 +61,7 @@ ShelterNaviには，図〇〇で表されている3つのドメインが存在�
     \item{\textbf{address：}}避難所の住所
     \item{\textbf{lat：}}避難所の緯度
     \item{\textbf{lng：}}避難所の経度
-    \item{\textbf{capacity：}}避難所の混雑度
+    \item{\textbf{capacity：}}避難所の収容可能人数
     \item{\textbf{isActive：}}避難所が利用可能か
 \end{itemize}
 
@@ -77,7 +77,7 @@ ShelterNaviには，図〇〇で表されている3つのドメインが存在�
     \item{\textbf{of families：}}世帯人数
 \end{itemize}
 
-最後にCheck-Inドメインにおいては，どのユーザがどの避難所を利用しているかを管理するためにユーザIDと避難所IDが必要である．また，複数の避難所への多重チェックインがないかを確認するために，チェックイン時刻と，チェックアウト時刻も取り扱う．以上のことからCheck-Inドメインでは以下のフィールドを規定する．
+Check-Inドメインにおいては，どのユーザがどの避難所を利用しているかを管理するためにユーザIDと避難所IDが必要である．また，複数の避難所への多重チェックインがないかを確認するために，チェックイン時刻と，チェックアウト時刻も取り扱う．以上のことからCheck-Inドメインでは以下のフィールドを規定する．
 
 \begin{itemize}
     \item{\textbf{cid：}}チェックインID
@@ -86,6 +86,25 @@ ShelterNaviには，図〇〇で表されている3つのドメインが存在�
     \item{\textbf{checkin-datetime：}}チェックイン時刻
     \item{\textbf{checkout-datetime：}}チェックアウト時刻
 \end{itemize}
+
+ShelterStateドメインにおいては，コロナ禍における避難所での密を考慮すべく，避難所の混雑度も取り扱う．それに伴い，現在の収容人数も管理する．そしてチェックイン，チェックアウトによる避難所の状態の最終更新日時も取り扱う．以上のことからShelterStateドメインでは以下のフィールドを規定する．
+
+\begin{itemize}
+     \item{\textbf{sid：}}避難所ID
+     \item{\textbf{：}}収容人数
+     \item{\textbf{sid：}}混雑度
+     \item{\textbf{datetime：}}更新日時
+ \end{itemize}
+
+CitizenStateドメインでは，
+
+ \begin{itemize}
+     \item{\textbf{uid：}}避難所ID
+     \item{\textbf{email：}}収容人数
+ \end{itemize}
+
+% CitizenStateドメインではユーザの状態しか取り扱わない？
+% Citizenドメインのフィールドとするのはダメなのかチェックする
 
 \subsection{主要なサービス}
 ShelterNaviでは他のアプリケーションとの連携や拡張性を考慮し，HTTPを介して外部から利用できるAPIを配備した．以下にAPIの詳細を示す．

@@ -3,7 +3,7 @@
 
 
 %% 4. 「技術研究報告」
-\documentclass[technicalreport]{ieicej}
+\documentclass[technicalreport,dvipdfmx]{ieicej}
 %\usepackage[dvips]{graphicx}
 %\usepackage[dvipdfmx]{graphicx,xcolor}
 \usepackage[fleqn]{amsmath}
@@ -11,6 +11,7 @@
 \usepackage[varg]{newtxmath}% % 英数字フォントの設定を変更しないでください
 \usepackage{latexsym}
 %\usepackage{amssymb}
+\usepackage[dvipdfmx]{graphicx}
 
 \jtitle{}
 \jsubtitle{}
@@ -52,8 +53,8 @@
 
 \subsection{ドメインモデリング}
 図〇〇にShelterNaviにおけるドメインモデルを示す．
-ShelterNaviには，図〇〇で表されている5つのドメインが存在し，それぞれShelter（避難所），Citizen（住民・ユーザ），Check-In（避難所へのチェックインまたはチェックアウト），ShelterState（避難所の状態），CitizenState（ユーザの状態）となっている．Check-Inドメインを通じてユーザとそのユーザが利用した避難所を関連付けさせるために，Check-Inドメインは必ず1つのCitizenドメインと1つのShelterドメインと結びつく．また，ShelterStateドメインは各避難所の状態を表しており，CitizenStateドメインはユーザの避難状態を示している．
-以下では，ShelterNaviの各ドメインを構成する要素について説明する．Shelterドメインにおいては，システムがどの避難所か特定するためのIDが必要であり，避難するユーザに向けて避難所の名称，位置情報を示す必要がある．そして，避難所の開放情報も取り扱う．以上のことからShelterドメインでは以下のフィールドを規定する．
+ShelterNaviには，図〇〇で表されている5つのドメインが存在し，それぞれShelter（避難所），User（住民・ユーザ），Check-In（避難所へのチェックインまたはチェックアウト），ShelterState（避難所の状態），UserState（ユーザの状態）となっている．Check-Inドメインを通じてユーザとそのユーザが利用した避難所を関連付けさせるために，Check-Inドメインは必ず1つのUserドメインと1つのShelterドメインと結びつく．また，ShelterStateドメインは各避難所の状態を表しており，UserStateドメインはユーザの避難状態を示している．
+以下では，ShelterNaviの各ドメインを構成する要素について説明する．Shelterドメインにおいては，システムがどの避難所か特定するためのIDが必要であり，避難するユーザに向けて避難所の名称，位置情報を示す必要がある．そして，避難所の開放情報も取り扱う．以上のことからShelterドメインでは以下のスキーマを規定する．
 
 \begin{itemize}
     \item{\textbf{sid：}}避難所ID
@@ -65,8 +66,8 @@ ShelterNaviには，図〇〇で表されている5つのドメインが存在�
     \item{\textbf{isActive：}}避難所が利用可能か
 \end{itemize}
 
-続いてCitizenドメインにおいては，ユーザ情報を一意に取り扱うためのユーザIDが必要である．また，本サービスに登録するためのemailアドレスとパスワード，（名前，住所：必要性をどう示すか），そして混雑度を計算するための世帯人数を取り扱う．% 本アプリにおける名前，住所，電話番号の必要性
-以上のことからCitizenドメインでは以下のフィールドを規定する．
+続いてUserドメインにおいては，ユーザ情報を一意に取り扱うためのユーザIDが必要である．また，本サービスに登録するためのemailアドレスとパスワード，（名前，住所：必要性をどう示すか），そして混雑度を計算するための世帯人数を取り扱う．% 本アプリにおける名前，住所，電話番号の必要性
+以上のことからUserドメインでは以下のスキーマを規定する．
 
 \begin{itemize}
     \item{\textbf{uid：}}ユーザID
@@ -77,7 +78,7 @@ ShelterNaviには，図〇〇で表されている5つのドメインが存在�
     \item{\textbf{of families：}}世帯人数
 \end{itemize}
 
-Check-Inドメインにおいては，どのユーザがどの避難所を利用しているかを管理するためにユーザIDと避難所IDが必要である．また，複数の避難所への多重チェックインがないかを確認するために，チェックイン時刻と，チェックアウト時刻も取り扱う．以上のことからCheck-Inドメインでは以下のフィールドを規定する．
+Check-Inドメインにおいては，どのユーザがどの避難所を利用しているかを管理するためにユーザIDと避難所IDが必要である．また，複数の避難所への多重チェックインがないかを確認するために，チェックイン時刻と，チェックアウト時刻も取り扱う．以上のことからCheck-Inドメインでは以下のスキーマを規定する．
 
 \begin{itemize}
     \item{\textbf{cid：}}チェックインID
@@ -87,37 +88,33 @@ Check-Inドメインにおいては，どのユーザがどの避難所を利用
     \item{\textbf{checkout-datetime：}}チェックアウト時刻
 \end{itemize}
 
-ShelterStateドメインにおいては，コロナ禍における避難所での密を考慮すべく，避難所の混雑度も取り扱う．それに伴い，現在の収容人数も管理する．そしてチェックイン，チェックアウトによる避難所の状態の最終更新日時も取り扱う．以上のことからShelterStateドメインでは以下のフィールドを規定する．
+ShelterStateドメインにおいては，コロナ禍における避難所での密を考慮すべく，避難所の混雑度も取り扱う．この混雑度は，避難所の収容可能人数に対しての現在の収容人数の割合から求められるので収容人数も管理する．そしてチェックイン，チェックアウトによる収容人数の変化を見るために，避難所の状態の最終更新日時も取り扱う．以上のことからShelterStateドメインでは以下のスキーマを規定する．
 
+% 現在の収容人数のスキーマ名なににするべきか．．．
 \begin{itemize}
+     \item{\textbf{id：}}避難所の状態ID
      \item{\textbf{sid：}}避難所ID
-     \item{\textbf{：}}収容人数
-     \item{\textbf{sid：}}混雑度
-     \item{\textbf{datetime：}}更新日時
+     \item{\textbf{num of accomodated：}}収容人数
+     \item{\textbf{congestion：}}混雑度
+     \item{\textbf{changedAt：}}更新日時
  \end{itemize}
 
-CitizenStateドメインでは，
+UserStateドメインでは，ユーザの避難状態の履歴を管理する．特定のユーザの履歴を見るためにユーザIDが必要である．そして，準備中，避難済み等の避難状態を表すスキーマを取り扱い，避難状態が変化した際の日時を記録する．なお，このUserStateドメインでは過去のデータを参照できるようにしておくために，1つのデータを更新していくのではなく，新規データを追加していく形をとる．
 
  \begin{itemize}
-     \item{\textbf{uid：}}避難所ID
-     \item{\textbf{email：}}収容人数
+     \item{\textbf{id：}}ユーザの状態ID
+     \item{\textbf{uid：}}ユーザID
+     \item{\textbf{state：}}避難状態
+     \item{\textbf{changedAt：}}更新日時
  \end{itemize}
 
+%\includepdf[pages=-,noautoscale=true,scale=0.9,pagecommand={}]{domain_model.pdf}
+\includegraphics[scale=0.5,pagebox=cropbox,clip]{domain_model.pdf}
 % CitizenStateドメインではユーザの状態しか取り扱わない？
 % Citizenドメインのフィールドとするのはダメなのかチェックする
 
 \subsection{主要なサービス}
 ShelterNaviでは他のアプリケーションとの連携や拡張性を考慮し，HTTPを介して外部から利用できるAPIを配備した．以下にAPIの詳細を示す．
-
-\subsubsection{ユーザサービス}
-\begin{itemize}
-    \item{\textbf{createUser( userForm )：}
-         メールアドレス，パスワード，世帯人数等のユーザ情報を元に新規アカウントを作成し，取得する．}
-    \item{\textbf{getUser( uid )：}
-         ユーザIDを指定することで該当するユーザアカウントを取得する．}
-    \item{\textbf{deleteUser( uid )：}
-         ユーザIDを指定することで該当するユーザアカウントを削除する．}
-\end{itemize}
 
 \subsubsection{シェルターサービス}
 \begin{itemize}
@@ -132,23 +129,50 @@ ShelterNaviでは他のアプリケーションとの連携や拡張性を考慮
     \item{\textbf{getAllShelters()：}
          全ての避難所データを取得する．}
     \item{\textbf{searchSheltersByDistance( lng, lat, distance )：}
-         経度，緯度，そして距離を指定することで，指定位置座標(lng, lat)から半径distance$\rm[km]$以内にある避難所データ全てを取得する．}
+         経度，緯度，そして距離を指定することで，指定位置座標(lng, lat)から半径distance$\rm[km]$以内にある避難所データ全てを取得する．当APIでは，地球上における大圏（大円）距離を計算する手法を使用しており，地球の半径を6371[km]，ユーザの経度座標をlng，緯度座標をlat，各避難所データの経度座標をs\_lng，緯度座標をs\_latとし，ユーザから半径distance[km]以内に存在する避難所を検索するものとして以下の計算式を用いる．
+
+         \begin{eqnarray*}
+             6371 \arccos ( \cos( radians( lat ) ) \times \cos( radians( s\_lat ) ) \\
+             \times \cos( radians( s\_lng ) - radians( lng ) ) + \sin( radians( lat ) ) \\
+             \times \sin( radians( s\_lat ) ) ) \leqq distance
+         \end{eqnarray*}}
     \item{\textbf{searchSheltersByKeyword( keyword )：}
-         文字列を指定することで，全避難所データの避難所名，または避難所の住所に部分一致するものがないか検索し，該当するものがあればそれらを全て取得する．}
+         文字列を指定することで，全避難所データの避難所名，または避難所の住所に部分一致するものがないか検索し，該当するデータを全て取得する．}
 \end{itemize}
 
-%半径dkmのシェルターを検索する方法→「4. 実装」に書く？
+\subsubsection{ユーザサービス}
+\begin{itemize}
+    \item{\textbf{createUser( userForm )：}
+         メールアドレス，パスワード，世帯人数等のユーザ情報を元に新規アカウントを作成し，取得する．}
+    \item{\textbf{getUser( uid )：}
+         ユーザIDを指定することで該当するユーザアカウントを取得する．}
+    \item{\textbf{deleteUser( uid )：}
+         ユーザIDを指定することで該当するユーザアカウントを削除する．}
+\end{itemize}
 
 \subsubsection{チェックインサービス}
 \begin{itemize}
     \item{\textbf{checkIn( uid, sid )：}
-         ユーザIDと避難所IDを指定することで，チェックインデータを作成し，時刻を記録し，取得する．}
+         ユーザIDと避難所IDを指定することで，チェックインデータを作成し，更新日時を記録する．}
     \item{\textbf{checkOut( uid, sid )：}
-         %チェックアウトする際のチェックインデータの指定方法はどうするか．}
-    }
+         ユーザIDと避難所IDから一意に定まるチェックインデータを取得し，チェックアウト時刻を更新する．}
 \end{itemize}
-混雑度の算出方法　現在のチェックイン人数／避難所のキャパシティ
-% checkIn()をたたいた際に，指定したsidの避難所の混雑度を更新する．（避難所エンティティに混雑度も持たせる？）
+
+\subsubsection{シェルターステートサービス}
+\begin{itemize}
+     \item{\textbf{checkIn( uid, sid )：}
+          ユーザIDと避難所IDを指定することで，避難所の収容人数をユーザの世帯人数分増加させ，避難所の混雑度を計算し，更新する．また，更新日時を記録する．}
+     \item{\textbf{checkOut( uid, sid )：}
+          ユーザIDと避難所IDを指定することで，避難所の収容人数をユーザの世帯人数分減少させ，避難所の混雑度を計算し，更新する．また，更新日時を記録する．}
+\end{itemize}
+
+\subsubsection{ユーザステートサービス}
+\begin{itemize}
+     \item{\textbf{checkIn( uid )：}
+          ユーザIDを指定することで，特定のユーザの避難状態を「避難済み」にしたUserStateのデータを新規で作成する．また，更新日時も併せて記録する．}
+     \item{\textbf{checkOut( uid )：}
+          ユーザIDを指定することで，特定のユーザの避難状態を「準備中」にしたUserStateのデータを新規で作成する．また，更新日時も併せて記録する．}
+\end{itemize}
 
 \section{実装}
 \subsection{ShelterNaviプロトタイプの実装}
@@ -170,11 +194,7 @@ ShelterNaviでは他のアプリケーションとの連携や拡張性を考慮
 %実際は管理者が直接データを入れることになりそうなので機能ではない？
 
 \subsection{地図上への避難所の可視化}
-本アプリケーションでは，避難所を可視化する上でGoogle Mapを利用している．避難所を取得するAPIで避難所データを取得し，それらのデータをGoogleMapsAPIで利用することで，地図上への避難所の可視化を行っている．また，ShelterNaviではユーザの現在位置に応じて地図上に表示する避難所を変更しており，これは「3.5　主要なサービス」で言及したsearchSheltersByDistance(lng, lat, distance)をを利用している．このAPIでは地球上における大圏（大円）距離を計算する手法を使用しており，地球の半径を6371[km]，ユーザの経度座標をlng，緯度座標をlat，各避難所データの経度座標をs\_lng，緯度座標をs\_latとし，ユーザから半径distance[km]以内に存在する避難所を検索するものとして以下の計算式を用いる．
-
-\begin{eqnarray*}
-    6371 \arccos ( \cos( radians( lat ) ) * \cos( radians( s\_lat ) ) \\* \cos( radians( s\_lng ) - radians( lng ) ) \\+ \sin( radians( lat ) ) * \sin( radians( s\_lat ) ) ) \leqq distance
-\end{eqnarray*}
+本アプリケーションでは，避難所を可視化する上でGoogle Mapを利用している．避難所を取得するAPIで避難所データを取得し，それらのデータをGoogleMapsAPIで利用することで，地図上への避難所の可視化を行っている．また，ShelterNaviではユーザの現在位置に応じて地図上に表示する避難所を変更しており，これは「3.5　主要なサービス」で言及したsearchSheltersByDistance(lng, lat, distance)をを利用している．
 
 上記の計算により，ユーザから半径distance[km]以内の避難所を特定することが可能になる．
 

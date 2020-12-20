@@ -109,9 +109,11 @@ UserStateドメインでは，ユーザの避難状態の履歴を管理する�
  \end{itemize}
 
 \begin{figure}[htbp]
-     \includegraphics[scale=0.5,pagebox=cropbox,clip]{domain_model.pdf}
-     \caption{ドメインモデル図}
-     \label{fig:domain}
+     \begin{center}
+          \includegraphics[scale=0.5,pagebox=cropbox,clip]{domain_model.pdf}
+          \caption{ドメインモデル図}
+          \label{fig:domain}
+     \end{center}
 \end{figure}
 % CitizenStateドメインではユーザの状態しか取り扱わない？
 % Citizenドメインのフィールドとするのはダメなのかチェックする
@@ -188,23 +190,44 @@ ShelterNaviでは他のアプリケーションとの連携や拡張性を考慮
     \item Webサーバ：Apache Tomcat
     \item Webサービスフレームワーク：SpringBoot（Java）
 \end{itemize}
-以下では実装した機能の詳細について述べる．
+以下ではShelterNaviの各画面構成に併せて実装の詳細を述べる．
+
+\subsection{サインアップ}
 
 \subsection{ログイン}
 今回の実装においては，セキュリティ性を担保するためにJavaのフレームワークであるSpring Securityを用いる．このフレームワークの機能を利用すれば，指定したURL内で，IDとパスワードをPostする特定のAPIを利用することで認証が可能になる．また，ユーザオブジェクトに権限を付与し，その権限に応じた認可を与えることも可能になる．本アプリケーションでは，通常の工程でユーザを作成した場合，CITIZEN（住民・一般ユーザ）の役割が付与される．実際には，ログイン機能における認証時にこの役割を見ることで，セッションに対して役割に対応した権限を付与する．これによりログイン後のユーザに対する各ページへの認可が可能になる．
 
-%\subsection{避難所の登録}
+\subsection{避難所検索}
 %実際は管理者が直接データを入れることになりそうなので機能ではない？
 
-\subsection{地図上への避難所の可視化}
+\subsection{チェックイン}
 本アプリケーションでは，避難所を可視化する上でGoogle Mapを利用している．避難所を取得するAPIで避難所データを取得し，それらのデータをGoogleMapsAPIで利用することで，地図上への避難所の可視化を行っている．また，ShelterNaviではユーザの現在位置に応じて地図上に表示する避難所を変更しており，これは「3.5　主要なサービス」で言及したsearchSheltersByDistance(lng, lat, distance)をを利用している．
 
 上記の計算により，ユーザから半径distance[km]以内の避難所を特定することが可能になる．
 
-%\subsection{チェックイン} cos( radians( lat ) ) * cos( radians( s_lat ) ) * cos( radians( s_lng ) - radians( lng ) ) + sin( radians( lat ) ) * sin( radians( s_lat ) )
+\begin{figure}[htbp]
+     \begin{center}
+          \includegraphics[scale=0.5,pagebox=cropbox,clip]{signup.png}
+          \caption{新規登録画面}
+          \label{fig:signup}
+     \end{center}
+\end{figure}
 
+\begin{figure}[htbp]
+     \begin{center}
+          \includegraphics[scale=0.5,pagebox=cropbox,clip]{login.png}
+          \caption{ログイン画面}
+          \label{fig:login}
+     \end{center}
+\end{figure}
 
-\subsection{}
+\begin{figure}[htbp]
+     \begin{center}
+          \includegraphics[scale=0.6,pagebox=cropbox,clip]{search_shelter.png}
+          \caption{避難所検索画面}
+          \label{fig:search_shelter}
+     \end{center}
+\end{figure}
 
 \section{考察・評価}
 

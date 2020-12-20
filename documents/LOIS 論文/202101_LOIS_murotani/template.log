@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.14159265-p3.8.3-191112-2.6 (utf8.sjis) (TeX Live 2020/W32TeX) (preloaded format=platex 2020.12.14)  20 DEC 2020 22:25
+This is e-pTeX, Version 3.14159265-p3.8.3-191112-2.6 (utf8.sjis) (TeX Live 2020/W32TeX) (preloaded format=platex 2020.12.14)  20 DEC 2020 22:36
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -438,25 +438,23 @@ LaTeX Font Info:    Font shape `T1/ntxtlf/m/n' will be
 (Font)              scaled to size 7.3pt on input line 140.
 LaTeX Font Info:    Font shape `T1/ntxtlf/m/n' will be
 (Font)              scaled to size 5.5pt on input line 140.
- [2]
 File: signup.png Graphic file (type bmp)
 <signup.png>
+ [2]
 File: login.png Graphic file (type bmp)
 <login.png>
 File: search_shelter.png Graphic file (type bmp)
 <search_shelter.png>
- [3] (./template.aux)
+ [3] [4
 
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
- ) 
+] (./template.aux) ) 
 Here is how much of TeX's memory you used:
  4942 strings out of 481140
  61012 string characters out of 5920653
- 307232 words of memory out of 5000000
+ 306232 words of memory out of 5000000
  20915 multiletter control sequences out of 15000+600000
  599992 words of font info for 137 fonts, out of 8000000 for 9000
  929 hyphenation exceptions out of 8191
  32i,8n,35p,952b,406s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on template.dvi (3 pages, 18336 bytes).
+Output written on template.dvi (4 pages, 17060 bytes).

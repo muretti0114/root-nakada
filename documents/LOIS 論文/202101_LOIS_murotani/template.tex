@@ -52,8 +52,8 @@
 \subsection{システムアーキテクチャ}
 
 \subsection{ドメインモデリング}
-図〇〇にShelterNaviにおけるドメインモデルを示す．
-ShelterNaviには，図〇〇で表されている5つのドメインが存在し，それぞれShelter（避難所），User（住民・ユーザ），Check-In（避難所へのチェックインまたはチェックアウト），ShelterState（避難所の状態），UserState（ユーザの状態）となっている．Check-Inドメインを通じてユーザとそのユーザが利用した避難所を関連付けさせるために，Check-Inドメインは必ず1つのUserドメインと1つのShelterドメインと結びつく．また，ShelterStateドメインは各避難所の状態を表しており，UserStateドメインはユーザの避難状態を示している．
+ShelterNaviにおけるドメインモデル図\ref{fig:domain}にを示す．
+ShelterNaviには，図\ref{fig:domain}で表されている5つのドメインが存在し，それぞれShelter（避難所），User（住民・ユーザ），Check-In（避難所へのチェックインまたはチェックアウト），ShelterState（避難所の状態），UserState（ユーザの状態）となっている．Check-Inドメインを通じてユーザとそのユーザが利用した避難所を関連付けさせるために，Check-Inドメインは必ず1つのUserドメインと1つのShelterドメインと結びつく．また，ShelterStateドメインは各避難所の状態を表しており，UserStateドメインはユーザの避難状態を示している．
 以下では，ShelterNaviの各ドメインを構成する要素について説明する．Shelterドメインにおいては，システムがどの避難所か特定するためのIDが必要であり，避難するユーザに向けて避難所の名称，位置情報を示す必要がある．そして，避難所の開放情報も取り扱う．以上のことからShelterドメインでは以下のスキーマを規定する．
 
 \begin{itemize}
@@ -108,8 +108,11 @@ UserStateドメインでは，ユーザの避難状態の履歴を管理する�
      \item{\textbf{changedAt：}}更新日時
  \end{itemize}
 
-%\includepdf[pages=-,noautoscale=true,scale=0.9,pagecommand={}]{domain_model.pdf}
-\includegraphics[scale=0.5,pagebox=cropbox,clip]{domain_model.pdf}
+\begin{figure}[htbp]
+     \includegraphics[scale=0.5,pagebox=cropbox,clip]{domain_model.pdf}
+     \caption{ドメインモデル図}
+     \label{fig:domain}
+\end{figure}
 % CitizenStateドメインではユーザの状態しか取り扱わない？
 % Citizenドメインのフィールドとするのはダメなのかチェックする
 

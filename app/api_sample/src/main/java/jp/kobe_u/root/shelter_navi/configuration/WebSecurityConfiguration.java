@@ -45,7 +45,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
         .antMatchers( "/login" ).permitAll()                // ログインページは誰でも許可
-        .antMatchers( "/users/**" ).permitAll()
+        .antMatchers( "/create" ).permitAll()
         .antMatchers( "/signup" ).permitAll()
         .antMatchers( "/hello/**" ).permitAll()
         //.antMatchers( "/shelters/**" ).permitAll()

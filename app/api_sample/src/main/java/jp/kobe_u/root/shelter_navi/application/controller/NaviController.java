@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import jp.kobe_u.root.shelter_navi.application.form.UserForm;
+
 @Controller
 public class NaviController {
     /*
@@ -17,6 +19,13 @@ public class NaviController {
         return "signup";
     }
 */
+
+    @RequestMapping( "/create" )
+    public String showSignupForm( Model model ) {
+        model.addAttribute("userForm", new UserForm());
+        return "signup";
+    }
+
     // thymeleaf使わないならいらない？
     @RequestMapping( "/login" )
     public String showLoginForm( @RequestParam Map<String, String> params, Model model ) {

@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.14159265-p3.8.3-191112-2.6 (utf8.sjis) (TeX Live 2020/W32TeX) (preloaded format=platex 2020.12.14)  21 DEC 2020 22:03
+This is e-pTeX, Version 3.14159265-p3.8.3-191112-2.6 (utf8.sjis) (TeX Live 2020/W32TeX) (preloaded format=platex 2020.12.14)  22 DEC 2020 15:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -410,31 +410,37 @@ LaTeX Font Info:    Font shape `OT1/ntxtlf/m/n' will be
 
 ]
 LaTeX Font Info:    Font shape `JT1/mc/b/n' in size <9> not available
-(Font)              Font shape `JT1/mc/bx/n' tried instead on input line 59.
+(Font)              Font shape `JT1/mc/bx/n' tried instead on input line 64.
 LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <9> not available
-(Font)              Font shape `JT1/gt/m/n' tried instead on input line 59.
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 64.
 LaTeX Font Info:    Font shape `JY1/mc/b/n' in size <9> not available
-(Font)              Font shape `JY1/mc/bx/n' tried instead on input line 59.
+(Font)              Font shape `JY1/mc/bx/n' tried instead on input line 64.
 LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <9> not available
-(Font)              Font shape `JY1/gt/m/n' tried instead on input line 59.
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 64.
 LaTeX Font Info:    Font shape `T1/ntxtlf/b/n' will be
-(Font)              scaled to size 9.0pt on input line 59.
-LaTeX Font Info:    Trying to load font information for TS1+ntxtlf on input line 73.
+(Font)              scaled to size 9.0pt on input line 64.
+ [2] [3]
+LaTeX Font Info:    Trying to load font information for TS1+ntxtlf on input line 148.
  (c:/texlive/2020/texmf-dist/tex/latex/newtx/ts1ntxtlf.fd
 File: ts1ntxtlf.fd 2015/01/18 v1.0 fd file for TS1/ntxtlf
 )
 LaTeX Font Info:    Font shape `TS1/ntxtlf/m/n' will be
-(Font)              scaled to size 9.0pt on input line 73.
- [2]
+(Font)              scaled to size 9.0pt on input line 148.
 LaTeX Font Info:    Font shape `T1/ntxtlf/m/n' will be
-(Font)              scaled to size 8.0pt on input line 140.
+(Font)              scaled to size 8.0pt on input line 199.
+File: img/system.png Graphic file (type bmp)
+<img/system.png>
+File: img/usecase.png Graphic file (type bmp)
+<img/usecase.png>
+File: img/architecture.png Graphic file (type bmp)
+<img/architecture.png>
 File: img/domain_model.pdf Graphic file (type pdf)
 <img/domain_model.pdf>
 LaTeX Font Info:    Font shape `T1/ntxtlf/m/n' will be
-(Font)              scaled to size 7.3pt on input line 170.
+(Font)              scaled to size 7.3pt on input line 253.
 LaTeX Font Info:    Font shape `T1/ntxtlf/m/n' will be
-(Font)              scaled to size 5.5pt on input line 170.
- [3]
+(Font)              scaled to size 5.5pt on input line 253.
+ [4] [5]
 File: img/signup.png Graphic file (type bmp)
 <img/signup.png>
 File: img/login.png Graphic file (type bmp)
@@ -443,16 +449,21 @@ File: img/search_shelter.png Graphic file (type bmp)
 <img/search_shelter.png>
 File: img/checkin.png Graphic file (type bmp)
 <img/checkin.png>
+
+Overfull \hbox (3.2421pt too wide) in paragraph at lines 353--354
+ [] 
+ []
+
 File: img/checkout.png Graphic file (type bmp)
 <img/checkout.png>
- [4] [5] [6] (./template.aux) ) 
+[6] [7] [8] (./template.aux) ) 
 Here is how much of TeX's memory you used:
- 5002 strings out of 481140
- 61844 string characters out of 5920653
- 311130 words of memory out of 5000000
- 20975 multiletter control sequences out of 15000+600000
+ 5017 strings out of 481140
+ 62110 string characters out of 5920653
+ 309130 words of memory out of 5000000
+ 20987 multiletter control sequences out of 15000+600000
  611869 words of font info for 166 fonts, out of 8000000 for 9000
  929 hyphenation exceptions out of 8191
- 32i,8n,35p,1271b,408s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 32i,8n,35p,1271b,412s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on template.dvi (6 pages, 38912 bytes).
+Output written on template.dvi (8 pages, 52636 bytes).

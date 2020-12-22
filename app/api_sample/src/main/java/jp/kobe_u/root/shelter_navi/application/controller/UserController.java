@@ -36,12 +36,13 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping( "/create" )
+    /*
+    @RequestMapping( "/create" )
     public String showSignupForm( Model model ) {
         model.addAttribute("userForm", new UserForm());
         return "signup";
     }
-
+*/
     // id, pass以外に必要な情報アリ
     // RequestParamじゃなくてRequestBodyにする
     // serviceに投げるのはUserEntityに変換してからの方が良い？

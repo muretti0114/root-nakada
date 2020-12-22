@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.14159265-p3.8.3-191112-2.6 (utf8.sjis) (TeX Live 2020/W32TeX) (preloaded format=platex 2020.12.14)  22 DEC 2020 15:45
+This is e-pTeX, Version 3.14159265-p3.8.3-191112-2.6 (utf8.sjis) (TeX Live 2020/W32TeX) (preloaded format=platex 2020.12.14)  22 DEC 2020 20:30
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -447,6 +447,11 @@ File: img/login.png Graphic file (type bmp)
 <img/login.png>
 File: img/search_shelter.png Graphic file (type bmp)
 <img/search_shelter.png>
+
+Overfull \hbox (6.25337pt too wide) in paragraph at lines 345--346
+ [] 
+ []
+
 File: img/checkin.png Graphic file (type bmp)
 <img/checkin.png>
 
@@ -466,4 +471,4 @@ Here is how much of TeX's memory you used:
  929 hyphenation exceptions out of 8191
  32i,8n,35p,1271b,412s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on template.dvi (8 pages, 52636 bytes).
+Output written on template.dvi (8 pages, 52644 bytes).

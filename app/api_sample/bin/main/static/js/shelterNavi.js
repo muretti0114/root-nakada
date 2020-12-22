@@ -262,9 +262,15 @@ function addHinanjo(latlng) {
                 let note = h.note;
                 let localGovernmentCode = h.local_government_code;
 
-
+                let pinColor;
+                if (maxFamilies < 30) {
+                    pinColor = "#00FF00";
+                } else if (30<= maxFamilies && maxFamilies < 70) {
+                    pinColor = "yellow";
+                } else if (70 <= maxFamilies) {
+                    pinColor = "#FF0000";
+                }
                 $('#shelterlist').append('<tr><td>' + String(i+1) + '</td><td>' + name + '</td><td>' + address + '</td><td>' + maxFamilies + '</td></tr>');
-
                 /*<table><tr><th scope="col">避難所ID</th><th scope="col">施設名</th><th scope="col">住所</th><th scope="col">経度</th><th scope="col">緯度</th><th scope="col">地域</th><th scope="col">収容人数</th><th scope="col">電話番号</th><th scope="col">備考</th><th scope="col">地方自治体コード</th></tr></table>*/
                 //ここまで
                 //h用のマーカーを作成
@@ -273,19 +279,20 @@ function addHinanjo(latlng) {
                     map: map,
                     title: h.name,
                     icon: {
-                        fillColor: "#FF0000", //塗り潰し色
+                        fillColor: pinColor, //塗り潰し色
                         fillOpacity: 0.8, //塗り潰し透過率
                         path: google.maps.SymbolPath.CIRCLE, //円を指定
                         scale: 16, //円のサイズ
-                        strokeColor: "#FF0000", //枠の色
+                        strokeColor: pinColor, //枠の色
                         strokeWeight: 1.0 //枠の透過率
                     },
                     label: {
                         text: String(i + 1), //ラベル文字
-                        color: '#FFFFFF', //文字の色
+                        color: '#000000', //文字の色
                         fontSize: '20px' //文字のサイズ
                     }
                 });
+                
                 //h用の情報ウィンドウ（吹き出し）を作成
                 infoWindow[id] = new google.maps.InfoWindow({ // 吹き出しの追加
                     content: '<div class="info">' + h.name + ' (' + h.address + ') ' + '</div>' // 吹き出しに表示する内容

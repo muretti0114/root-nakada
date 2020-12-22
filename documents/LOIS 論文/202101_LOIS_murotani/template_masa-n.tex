@@ -12,6 +12,7 @@
 \usepackage{latexsym}
 %\usepackage{amssymb}
 \usepackage[dvipdfmx]{graphicx}
+\usepackage{url}
 
 \jtitle{コロナ時代の密を考慮した避難所ナビゲーションアプリの開発}
 \jsubtitle{}
@@ -35,7 +36,7 @@
 \end{jabstract}
 \begin{jkeyword}
 %和文キーワード
-災害，Webアプリ，新型コロナウイルス，避難意識, 避難所，自助
+新型コロナウイルス，防災，避難所，Webアプリケーション，避難所，自助，自治体
 \end{jkeyword}
 \begin{eabstract}
 %英文アブストラクト
@@ -43,7 +44,7 @@ Japan is a disaster-prone country, and tremendous damage occurs every year. Due 
 \end{eabstract}
 \begin{ekeyword}
 %英文キーワード
-disaster, Web application, COVID-19, preparedness, evacuation shelters, self-effort
+COVID-19, disaster preparedness, evacuation shelters, Web application, self-effort, local government
 \end{ekeyword}
 \maketitle
 
@@ -256,9 +257,11 @@ UserStateエンティティは，ユーザの避難状態とその履歴を管�
 
 \subsection{主要なサービス}
 \label{sec:service}
-ShelterNaviでは他のアプリケーションとの連携や拡張性を考慮し，HTTPを介して外部から利用できるAPIを配備した．以下にAPIの詳細を示す．
+ドメインモデルの各エンティティを操作する主要なサービスを設計する．
+ShelterNaviでは他のアプリケーションとの連携や拡張性を考慮し，HTTP-RESTによって呼び出し可能なRESTful　Web-APIとして配備した．以下に各サービスの詳細を示す．
 
-\subsubsection{シェルターサービス}
+\subsubsection{{\bf ShelterService:} 避難所サービス}
+避難所のCRUD(生成，読出，更新，削除)を行うサービスである．以下にAPIの一覧を示す．
 \begin{itemize}
     \item{\textbf{createShelter( shelterForm )：}
          避難所ID，避難所名，位置情報を基に避難所データを作成し，取得する．}
@@ -271,92 +274,87 @@ ShelterNaviでは他のアプリケーションとの連携や拡張性を考慮
     \item{\textbf{getAllShelters()：}
          全ての避難所データを取得する．}
     \item{\textbf{searchSheltersByDistance( lng, lat, distance )：}
-         経度，緯度，そして距離を指定することで，指定位置座標(lng, lat)から半径distance$\rm[km]$以内にある避難所データ全てを取得する．当APIでは，地球上における大圏（大円）距離を計算する手法を使用しており，地球の半径を6371[km]，ユーザの経度座標をlng，緯度座標をlat，各避難所データの経度座標をs\_lng，緯度座標をs\_latとし，ユーザから半径distance[km]以内に存在する避難所を検索するものとして以下の計算式を用いる．
-
+         経度，緯度，そして距離を指定することで，指定位置座標(lng, lat)から半径distance$\rm[km]$以内にある避難所データ全てを取得する．当APIでは，地球上における大圏距離を計算する手法を採用し，ユーザの現在位置$p$と与えられた避難所の距離$s$の間の直線距離$d(p,s)$計算する．具体的には，地球の半径を6371[km]，ユーザの経度座標を$lng$，緯度座標を$lat$，各避難所データの経度座標を$s.lng$，緯度座標を$s.lat$としたとき，$d(p,s)$を以下の計算式で求める．
          \begin{eqnarray*}
-             6371 \arccos ( \cos( radians( lat ) ) \times \cos( radians( s\_lat ) ) \\
-             \times \cos( radians( s\_lng ) - radians( lng ) ) + \sin( radians( lat ) ) \\
-             \times \sin( radians( s\_lat ) ) ) \leqq distance
+          &d(&p,s) = 6371 \times \arccos (\\
+          & &\cos( rad(lat ) ) \times \cos( rad( s.lat ) ) 
+          \times \cos( rad( s.lng ) - rad(lng ) ) \\
+          & & +  \sin( rad( lat ) ) \times \sin( rad( s.lat ))\\
+          &)&
          \end{eqnarray*}}
     \item{\textbf{searchSheltersByKeyword( keyword )：}
-         文字列を指定することで，全避難所データの避難所名，または避難所の住所に部分一致するものがないか検索し，該当するデータを全て取得する．}
+         文字列を指定して避難所を検索する．避難所名，または避難所住所に部分一致する避難所エンティティを全て取得する．}
 \end{itemize}
 
-\subsubsection{ユーザサービス}
+\subsubsection{{\bf UserService:} ユーザサービス}
+ユーザのCRUDを行うサービスである．以下にAPIの一覧を示す．
 \begin{itemize}
     \item{\textbf{createUser( userForm )：}
-         メールアドレス，パスワード，世帯人数等のユーザ情報を元に新規アカウントを作成し，取得する．}
+         メールアドレス，パスワード，名前，住所，世帯人数を含むユーザ情報を元に新規ユーザを作成する．}
     \item{\textbf{getUser( uid )：}
-         ユーザIDを指定することで該当するユーザアカウントを取得する．}
+         ユーザIDを指定することで該当するユーザエンティティを取得する．}
+    \item{\textbf{updateUser(uid, userForm )：}
+         ユーザフォームを入力して，既存のユーザ情報を更新する．}
     \item{\textbf{deleteUser( uid )：}
-         ユーザIDを指定することで該当するユーザアカウントを削除する．}
+         ユーザIDを指定することで該当するユーザエンティティを削除する．}
 \end{itemize}
 
-\subsubsection{チェックインサービス}
+\subsubsection{{\bf CheckInService:} チェックインサービス}
+避難所へのチェックイン，チェックアウト操作を行うサービスである．
+以下にAPIの一覧を示す．
 \begin{itemize}
     \item{\textbf{checkIn( uid, sid )：}
-         ユーザIDと避難所IDを指定することで，チェックインデータを作成し，更新日時を記録する．}
+         ユーザIDと避難所IDを指定して，チェックイン処理を行う．具体的には，Check-Inオブジェクトを新規作成し，作成日時を記録する．同時に，避難所の収容人数をそのユーザの世帯人数分増加させ，避難所の混雑度を再計算して，ShelterStateオブジェクトを更新する．さらに，避難状態を「避難済」に設定したUserStateオブジェクトを新規作成する．}
     \item{\textbf{checkOut( uid, sid )：}
-         ユーザIDと避難所IDから一意に定まるチェックインデータを取得し，チェックアウト時刻を更新する．}
+         ユーザIDと避難所IDを指定して，チェックアウト処理を行う．
+         ユーザIDと避難所IDから一意に定まる最新のチェックインデータを取得し，チェックアウト時刻を記入する．同時に，避難所の収容人数をそのユーザの世帯人数分減少させ，避難所の混雑度を再計算して，ShelterStateオブジェクトを更新する．さらに，避難状態を「避難中」に設定したUserStateオブジェクトを新規作成する．}
 \end{itemize}
 
-\subsubsection{シェルターステートサービス}
-\begin{itemize}
-     \item{\textbf{checkIn( uid, sid )：}
-          ユーザIDと避難所IDを指定することで，避難所の収容人数をユーザの世帯人数分増加させ，避難所の混雑度を計算し，更新する．また，更新日時を記録する．}
-     \item{\textbf{checkOut( uid, sid )：}
-          ユーザIDと避難所IDを指定することで，避難所の収容人数をユーザの世帯人数分減少させ，避難所の混雑度を計算し，更新する．また，更新日時を記録する．}
-\end{itemize}
+%% ↓　これらはチェックインサービスから内部的に呼び出されるものとして修正した．
+%\subsubsection{シェルターステートサービス}
+%\begin{itemize}
+%     \item{\textbf{checkIn( uid, sid )：}
+%          ユーザIDと避難所IDを指定することで，避難所の収容人数をユーザの世帯人数分増加させ，避難所の混雑度を計算し，更新する．また，更新日時を記録する．}
+%     \item{\textbf{checkOut( uid, sid )：}
+%          ユーザIDと避難所IDを指定することで，避難所の収容人数をユーザの世帯人数分減少させ，避難所の混雑度を計算し，更新する．また，更新日時を記録する．}
+%\end{itemize}
 
-\subsubsection{ユーザステートサービス}
-\begin{itemize}
-     \item{\textbf{checkIn( uid )：}
-          ユーザIDを指定することで，特定のユーザの避難状態を「避難済み」にしたUserStateのデータを新規で作成する．また，更新日時も併せて記録する．}
-     \item{\textbf{checkOut( uid )：}
-          ユーザIDを指定することで，特定のユーザの避難状態を「準備中」にしたUserStateのデータを新規で作成する．また，更新日時も併せて記録する．}
-\end{itemize}
+%\subsubsection{ユーザステートサービス}
+%\begin{itemize}
+%     \item{\textbf{checkIn( uid )：}
+%          ユーザIDを指定することで，特定のユーザの避難状態を「避難済み」にしたUserStateのデータを新規で作成する．また，更新日時も併せて記録する．}
+%     \item{\textbf{checkOut( uid )：}
+%          ユーザIDを指定することで，特定のユーザの避難状態を「準備中」にしたUserStateのデータを新規で作成する．また，更新日時も併せて記録する．}
+%\end{itemize}
 
 \section{実装}
-\subsection{ShelterNaviプロトタイプの実装}
-今回は以下の開発環境で「ユーザサービス」，「シェルターサービス」，また「チェックインサービス」の一部の開発を行った．
+\subsection{Shelter Naviプロトタイプの実装}
+前述した設計に基づき，Shelter Naviのプロトタイプを実装した．
+今回のプロトタイプでは，住民ユースケースC1～C3をカバーする．
+避難所のデータは神戸市の指定緊急避難所335件，姫路市の指定避難所255件をデータベースに手動で登録した．これらの避難所データは，神戸市\cite{kobe_open_data}および姫路市\cite{himeji_open_data}が公開する避難所オープンデータに基づいて作成した．
+
+プロトタイプ実装で用いた技術は以下のとおりである．
 \begin{itemize}
     \item サーバ開発言語：Java
-    \item クライアント開発言語：HTML5,JavaScript
-    \item CSSライブラリ：BootStrap
+    \item アプリケーションフレームワーク：Spring Boot
     \item データベース：MySQL 8.0.20
-    \item Webサーバ：Apache Tomcat
-    \item Webサービスフレームワーク：SpringBoot（Java）
+    \item Webサーバ：Apache Tomcat 9.0
+    \item クライアント開発言語：HTML5, JavaScript
+    \item CSSライブラリ：Bootstrap 4
 \end{itemize}
-以下ではShelterNaviの「サインアップ」，「ログイン」，「避難所検索」，「チェックイン」の各画面構成に併せて実装の詳細を述べる．
 
-\subsection{サインアップ}
-\label{sec:signup}
-サインアップ画面を図\ref{fig:signup}に示す．サインアップ画面は，ログイン時に必要なメールアドレスとパスワードからなる「ログイン情報」とログイン後，システム内で扱われる名前，住所，世帯人数，電話番号（任意）からなる「個人情報」の2つの要素で構成されている．これらの情報を入力したうえで図\ref{fig:signup}下部の登録ボタンをクリックすれば，ユーザ新規登録の完了となる．
+以下ではShelterNaviの「ログイン」，「サインアップ」，「避難所検索」，「チェックイン」の各画面を例に挙げて，作成したプロトタイプ実装を概説する．
+
 
 \subsection{ログイン}
-ログイン画面を図\ref{fig:login}に示す．ログイン画面では\ref{sec:signup}で述べた「ログイン情報」であるメールアドレスとパスワードを画面中央にある項目に入力し，ログインボタンをクリックする．ユーザとして登録済みの正しいメールアドレスとパスワードが入力できていれば，ログイン後に避難所検索画面に移行する．ログインが成功した際は，ユーザごとに権限が与えられる仕組みになっており，通常付与される権限では\ref{sec:service}で紹介したAPIの一部しか扱えないため，自身の登録した情報が他ユーザから閲覧，更新，削除されることはない．
-%今回の実装においては，セキュリティ性を担保するためにJavaのフレームワークであるSpring Securityを用いる．このフレームワークの機能を利用すれば，指定したURL内で，IDとパスワードをPostする特定のAPIを利用することで認証が可能になる．また，ユーザオブジェクトに権限を付与し，その権限に応じた認可を与えることも可能になる．本アプリケーションでは，通常の工程でユーザを作成した場合，CITIZEN（住民・一般ユーザ）の役割が付与される．実際には，ログイン機能における認証時にこの役割を見ることで，セッションに対して役割に対応した権限を付与する．これによりログイン後のユーザに対する各ページへの認可が可能になる．
 
-\subsection{避難所検索}
-避難所検索画面を図\ref{fig:search_shelter}に示す．避難所検索画面では画面上部に青いマーカーを現在地とした地図が表示されており，現在地から半径1$\rm[km]$以内の避難所を赤いマーカーで配置している．避難所の表示は\ref{sec:service}で紹介したsearchSheltersByDistanceを利用してリアルタイムでの更新を行っている．避難所のマーカーは．クリックすることで避難所の詳細を表示することもできる．また画面下部のリストは，地図上の避難所を現在地からの距離が近い順に表示したものである．リストの各項目は左から地図上のマーカーの番号，避難所名，避難所の住所，混雑状況の4つである．最後に，画面最下部に検索バーでは避難所のID，もしくは避難所名ないし，避難所の住所に含まれる文字を入力することで避難所の検索をすることができる．
-%実際は管理者が直接データを入れることになりそうなので機能ではない？
 
-\subsection{チェックイン}
-チェックイン画面を図\ref{fig:checkin}に示す．チェックイン画面では，チェックインする避難所を「現在地」，「エリア」，「地図」のいずれかから選択することができる．「現在地」から選択する場合，画面上部の青色の「現在地を取得」ボタンをクリックすれば，現在地に存在する避難所を選択することができる．「エリア」から選択する場合は，画面中央の「エリアから選択」の項目である都道府県，市町村，地域をプルダウンメニューから選択することで避難所のプルダウンメニューに条件に該当する避難所リストが現れる．「地図」から選択する場合は，画面下部の地図上にある赤いマーカーをクリックすることで避難所の選択が可能になる．これらのいずれかの方法で避難所を選択してから画面右下の「チェックインする」ボタンを押すことで避難所へのチェックインが完了する．
-%本アプリケーションでは，避難所を可視化する上でGoogle Mapを利用している．避難所を取得するAPIで避難所データを取得し，それらのデータをGoogleMapsAPIで利用することで，地図上への避難所の可視化を行っている．また，ShelterNaviではユーザの現在位置に応じて地図上に表示する避難所を変更しており，これは「3.5　主要なサービス」で言及したsearchSheltersByDistance(lng, lat, distance)をを利用している．
+Shelter Naviのログイン画面を図\ref{fig:login}に示す．
+住民ユーザは画面中央のフォームにメールアドレスとパスワードを入力してログインする．正しいメールアドレスとパスワードが入力できていれば，認証が成功し避難所検索画面に移行する．認証が成功すると，そのユーザに関連するエンティティにアクセスの認可が許可される．一般住民ユーザに認可・付与される権限では，自身のエンティティへのアクセスしか認可されないため，自分の情報が他ユーザから閲覧，更新，削除されることはない．
 
-\subsection{チェックアウト}
-チェックアウト画面を図\ref{fig:checkout}に示す．いずれかの避難所にチェックイン済みの場合，チェックアウト画面左下には「現在の避難所：「※チェックイン済みの避難所名」からチェックアウトしますか？」の1文が表示される．画面右下の「チェックアウトする」ボタンを押すことで，現在チェックインしている避難所からのチェックアウトが完了する．
+ユーザ情報をまだ登録していない場合には，「新規登録」ボタンを押すことで，次節で述べるサインアップ画面に移行する．
 
-\begin{figure}[htbp]
-     \begin{center}
-          \includegraphics[scale=0.5,pagebox=cropbox,clip]{img/signup.png}
-          \caption{新規登録画面}
-          \label{fig:signup}
-     \end{center}
-\end{figure}
-
-\begin{figure}[htbp]
+\begin{figure}[t]
      \begin{center}
           \includegraphics[scale=0.5,pagebox=cropbox,clip]{img/login.png}
           \caption{ログイン画面}
@@ -364,7 +362,25 @@ ShelterNaviでは他のアプリケーションとの連携や拡張性を考慮
      \end{center}
 \end{figure}
 
-\begin{figure}[htbp]
+%今回の実装においては，セキュリティ性を担保するためにJavaのフレームワークであるSpring Securityを用いる．このフレームワークの機能を利用すれば，指定したURL内で，IDとパスワードをPostする特定のAPIを利用することで認証が可能になる．また，ユーザオブジェクトに権限を付与し，その権限に応じた認可を与えることも可能になる．本アプリケーションでは，通常の工程でユーザを作成した場合，CITIZEN（住民・一般ユーザ）の役割が付与される．実際には，ログイン機能における認証時にこの役割を見ることで，セッションに対して役割に対応した権限を付与する．これによりログイン後のユーザに対する各ページへの認可が可能になる．
+
+\subsection{サインアップ}
+\label{sec:signup}
+サインアップ画面を図\ref{fig:signup}に示す．
+住民が自身のユーザ情報をフォームに入力し，新規登録を行う．ユーザの識別に必要なメールアドレスと，認証に必要なパスワードを指定する．また，システム内で扱われる名前，住所，世帯人数，電話番号（任意）からなる「個人情報」も併せて入力する．これらの情報を入力したうえで図\ref{fig:signup}下部の登録ボタンをクリックすれば，ユーザ新規登録の完了となる．
+
+\begin{figure}[t]
+     \begin{center}
+          \includegraphics[scale=0.6,pagebox=cropbox,clip]{img/signup.png}
+          \caption{サインアップ画面}
+          \label{fig:signup}
+     \end{center}
+\end{figure}
+
+\subsection{避難所検索}
+避難所検索画面を図\ref{fig:search_shelter}に示す．
+
+\begin{figure}[t]
      \begin{center}
           \includegraphics[scale=0.6,pagebox=cropbox,clip]{img/search_shelter.png}
           \caption{避難所検索画面}
@@ -372,7 +388,23 @@ ShelterNaviでは他のアプリケーションとの連携や拡張性を考慮
      \end{center}
 \end{figure}
 
-\begin{figure}[htbp]
+避難所検索画面では画面上部に青いマーカーを現在地とした地図が表示される．地図上には，現在地周辺（プロトタイプでは半径1$\rm[km]$以内としている）の避難所を番号付きのピンで配置している．
+周辺の避難所の検索は\ref{sec:service}で紹介したAPI，searchSheltersByDistance()を利用してリアルタイムで更新する．
+ピンの色は，避難所の混雑度の値に応じて，緑（低い），黄色（中程度），赤（高い）の色で表示される．避難所のピンをクリックすることで避難所の詳細情報を表示することもできる．
+
+画面下部のリストには，地図上の避難所が距離が近い順に表示される．リストの各項目は，左から地図上のマーカーの番号，避難所名，避難所の住所，混雑状況の4つである．最後に，画面最下部に検索バーでは，避難所ID，名称，住所で避難所を検索できる．
+
+%実際は管理者が直接データを入れることになりそうなので機能ではない？
+
+\subsection{チェックイン}
+チェックイン画面を図\ref{fig:checkin}に示す．チェックイン画面では，チェックインする避難所を「現在地」，「エリア」，「地図」のいずれかから選択することができる．「現在地」から選択する場合，画面上部の青色の「現在地を取得」ボタンをクリックすれば，現在地に存在する避難所を選択することができる．「エリア」から選択する場合は，画面中央の「エリアから選択」の項目である都道府県，市町村，地域をプルダウンメニューから選択することで避難所のプルダウンメニューに条件に該当する避難所リストが現れる．「地図」から選択する場合は，画面下部の地図上にある赤いマーカーをクリックすることで避難所の選択が可能になる．これらのいずれかの方法で避難所を選択してから画面右下の「チェックインする」ボタンを押すことで避難所へのチェックインが完了する．
+%本アプリケーションでは，避難所を可視化する上でGoogle Mapを利用している．避難所を取得するAPIで避難所データを取得し，それらのデータをGoogleMapsAPIで利用することで，地図上への避難所の可視化を行っている．また，ShelterNaviではユーザの現在位置に応じて地図上に表示する避難所を変更しており，これは「3.5　主要なサービス」で言及したsearchSheltersByDistance(lng, lat, distance)をを利用している．
+
+%\subsection{チェックアウト}
+チェックアウト画面を図\ref{fig:checkout}に示す．
+いずれかの避難所にチェックイン済みの場合，チェックアウト画面左下には「現在の避難所：「※チェックイン済みの避難所名」からチェックアウトしますか？」の1文が表示される．画面右下の「チェックアウトする」ボタンを押すことで，現在チェックインしている避難所からのチェックアウトが完了する．
+
+\begin{figure}[t]
      \begin{center}
           \includegraphics[scale=0.6,pagebox=cropbox,clip]{img/checkin.png}
           \caption{チェックイン画面}
@@ -380,7 +412,7 @@ ShelterNaviでは他のアプリケーションとの連携や拡張性を考慮
      \end{center}
 \end{figure}
 
-\begin{figure}[htbp]
+\begin{figure}[t]
      \begin{center}
           \includegraphics[scale=0.6,pagebox=cropbox,clip]{img/checkout.png}
           \caption{チェックアウト画面}
@@ -409,6 +441,20 @@ Shelter Naviの実現によって得られる効果・メリットとして，�
 
 \section{おわりに}
 
+本研究ではコロナ時代の災害を想定し，住民の自助によって避難所での密の形成を回避し，迅速且つ安全な避難の実現を支援するモバイル・アプリケーション Shelter Navi を提案した．
+クラウドサーバによる避難所の混雑状態の管理・可視化と，住民による避難所の検索とチェックインによって，各避難所に特別な設備を必要とすることなく，避難所での密を考慮した避難が可能となる．
+また，Shelter Navi のユースケース定義，ドメインモデル，サービスの設計を行い，プロトタイプをWebアプリケーションとして実装した．
+
+今後の課題としては，実際の避難を想定した有効性評価を行うことである．
+これには，近隣の自治体に協力を依頼して避難所データの整備を行ったうえで，避難訓練等の機会に住民に試用・評価してもらうことを考えていきたい．
+また，Shelter Naviの機能強化も併せて行う予定である．
+まずはユーザによる私的な避難所（親類宅や友人宅など）の登録・管理機能の追加があげられる．
+さらには，避難所での情報共有や避難者同士のコミュニケーション等，チェックイン後の避難生活の質を向上する機能も考えていきたい．
+
+\ack %% 謝辞
+本研究は，
+JSTグローバルサイエンスキャンパス ROOTプログラム，
+JSPS科研費 JP19H01138, JP18H03242, JP18H03342, JP19H04154, JP19K02973，JP20K11059, JP20H04014, JP20H05706 の研究助成を受けて行われている．
 
 %\bibliographystyle{sieicej}
 %\bibliography{myrefs}
@@ -422,193 +468,12 @@ Shelter Naviの実現によって得られる効果・メリットとして，�
 \bibitem{7} 毎日新聞 “避難所「先着順で満員、2回も振られる」台風10号、コロナ対策で収容人数の減少で” 2020.09.07
 \bibitem{8} 株式会社バカン “株式会社バカンと宮崎県日南市、災害発生時にIoTを活用して避難所の混雑情報配信を支援する協定を締結” 2020.08.03
 \bibitem{9} Spring “Why Spring?” https://spring.io/why-spring
+\bibitem{kobe_open_data} 神戸市，‘‘災害時の避難所'', 
+\url{https://www.city.kobe.lg.jp/a46152/bosai/prevention/evacuation.html}
+\bibitem{himeji_open_data} 姫路市，``オープンデータカタログサイト'',
+\url{https://city.himeji.gkan.jp/gkan/dataset/hinanshisetsu}
+
 \end{thebibliography}
 
 \end{document}
 
-
-%% 1. 「論文」
-\documentclass[paper]{ieicej}
-%\documentclass[invited]{ieicej}% 招待論文
-%\documentclass[survey]{ieicej}% サーベイ論文
-%\documentclass[comment]{ieicej}% 解説論文
-%\usepackage[dvips]{graphicx}
-%\usepackage[dvipdfmx]{graphicx,xcolor}
-\usepackage[fleqn]{amsmath}
-\usepackage{newtxtext}% 英数字フォントの設定を変更しないでください
-\usepackage[varg]{newtxmath}% % 英数字フォントの設定を変更しないでください
-\usepackage{latexsym}
-%\usepackage{amssymb}
-
-\setcounter{page}{1}
-
-\field{}
-\jtitle{}
-\etitle{}
-\authorlist{%
- \authorentry{}{}{}\MembershipNumber{}
- %\authorentry{和文著者名}{英文著者名}{所属ラベル}\MembershipNumber{}
- %\authorentry[メールアドレス]{和文著者名}{英文著者名}{所属ラベル}\MembershipNumber{}
- %\authorentry{和文著者名}{英文著者名}{所属ラベル}[現在の所属ラベル]\MembershipNumber{}
-}
-\affiliate[]{}{}
-%\affiliate[所属ラベル]{和文所属}{英文所属}
-%\paffiliate[]{}
-%\paffiliate[現在の所属ラベル]{和文所属}
-\jalcdoi{???????????}% ← このままにしておいてください
-
-\begin{document}
-\begin{abstract}
-%和文あらまし 500字以内
-\end{abstract}
-\begin{keyword}
-%和文キーワード 4〜5語
-\end{keyword}
-\begin{eabstract}
-%英文アブストラクト 100 words
-\end{eabstract}
-\begin{ekeyword}
-%英文キーワード
-\end{ekeyword}
-\maketitle
-
-
-
-\ack %% 謝辞
-
-%\bibliographystyle{sieicej}
-%\bibliography{myrefs}
-\begin{thebibliography}{99}% 文献数が10未満の時 {9}
-\bibitem{}
-\end{thebibliography}
-
-\appendix
-
-\begin{biography}
-\profile{}{}{}
-%\profile{会員種別}{名前}{紹介文}% 顔写真あり
-%\profile*{会員種別}{名前}{紹介文}% 顔写真なし
-\end{biography}
-
-\end{document}
-
-
-
-%% 2. 「レター」
-\documentclass[letter]{ieicej}
-%\usepackage[dvips]{graphicx}
-%\usepackage[dvipdfmx]{graphicx,xcolor}
-\usepackage[fleqn]{amsmath}
-\usepackage{newtxtext}% 英数字フォントの設定を変更しないでください
-\usepackage[varg]{newtxmath}% % 英数字フォントの設定を変更しないでください
-\usepackage{latexsym}
-%\usepackage{amssymb}
-
-\setcounter{page}{1}
-
-\typeofletter{研究速報}
-%\typeofletter{紙上討論}
-%\typeofletter{問題提起}
-%\typeofletter{ショートノート}
-\field{}
-\jtitle{}
-\etitle{}
-\authorlist{%
- \authorentry{}{}{}{}\MembershipNumber{}
- %\authorentry{和文著者名}{英文著者名}{会員種別}{所属ラベル}\MembershipNumber{}
- %\authorentry{和文著者名}{英文著者名}{会員種別}{所属ラベル}[現在の所属ラベル]\MembershipNumber{}
-}
-\affiliate[]{}{}
-%\affiliate[所属ラベル]{和文所属}{英文所属}
-%\paffiliate[]{}
-%\paffiliate[現在の所属ラベル]{和文所属}
-\jalcdoi{???????????}% ← このままにしておいてください
-
-\begin{document}
-\maketitle
-\begin{abstract}
-%和文あらまし 120字以内
-\end{abstract}
-\begin{keyword}
-%和文キーワード 4〜5語
-\end{keyword}
-\begin{eabstract}
-%英文アブストラクト 50 words
-\end{eabstract}
-\begin{ekeyword}
-%英文キーワード
-\end{ekeyword}
-
-\section{まえがき}
-
-
-\ack %% 謝辞
-
-%\bibliographystyle{sieicej}
-%\bibliography{myrefs}
-\begin{thebibliography}{99}% 文献数が10未満の時 {9}
-\bibitem{}
-\end{thebibliography}
-
-\appendix
-\section{}
-
-\end{document}
-
-
-%% 3. 「レター（C分冊）」
-\documentclass[electronicsletter]{ieicej}
-%\usepackage[dvips]{graphicx}
-%\usepackage[dvipdfmx]{graphicx,xcolor}
-\usepackage[fleqn]{amsmath}
-\usepackage{newtxtext}% 英数字フォントの設定を変更しないでください
-\usepackage[varg]{newtxmath}% % 英数字フォントの設定を変更しないでください
-\usepackage{latexsym}
-%\usepackage{amssymb}
-
-\setcounter{page}{1}
-
-\field{}
-\jtitle{}
-\etitle{}
-\authorlist{%
- \authorentry{}{}{}{}\MembershipNumber{}
- %\authorentry{和文著者名}{英文著者名}{会員種別}{所属ラベル}\MembershipNumber{}
- %\authorentry{和文著者名}{英文著者名}{会員種別}{所属ラベル}[現在の所属ラベル]\MembershipNumber{}
-}
-\affiliate[]{}{}
-%\affiliate[所属ラベル]{和文所属}{英文所属}
-%\paffiliate[]{}
-%\paffiliate[現在の所属ラベル]{和文所属}
-\jalcdoi{???????????}% ← このままにしておいてください
-
-\begin{document}
-\begin{abstract}
-%和文あらまし 120字以内
-\end{abstract}
-\begin{keyword}
-%和文キーワード 4〜5語
-\end{keyword}
-\begin{eabstract}
-%英文アブストラクト 50 words
-\end{eabstract}
-\begin{ekeyword}
-%英文キーワード
-\end{ekeyword}
-\maketitle
-
-\section{まえがき}
-
-
-\ack %% 謝辞
-
-%\bibliographystyle{sieicej}
-%\bibliography{myrefs}
-\begin{thebibliography}{99}% 文献数が 10 未満の時 {9}
-\bibitem{}
-\end{thebibliography}
-
-\appendix
-\section{}
-
-\end{document}

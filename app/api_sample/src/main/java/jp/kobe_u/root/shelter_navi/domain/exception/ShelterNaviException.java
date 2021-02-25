@@ -10,6 +10,8 @@ public class ShelterNaviException extends RuntimeException {
     public static final int INVALID_USER_UPDATE = 103;
     public static final int INVALID_USER_FORM = 104;
     
+    public static final int SHELTER_NOT_FOUND = 105;
+    
     public static final int ERROR = 999;
 
     private int code;
